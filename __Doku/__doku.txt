@@ -1,1 +1,12 @@
 glassfish im Debug Mode starten, dann erfolgt automatisch ein Hot-Deployment
+
+
+
+____________________________________________
+Glassfish LOCAL:
+
+Vom Ressourcen-Gedanken her geht es eigentlich gar nicht, denn wir haben ja nicht nur 1 Ressource wie NESN sondern deren 4
+Ich denke da müssen wir anstatt Path-Param auf Query Param wechseln :
+http://localhost:8080/web_war_exploded/rest/correlation?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
+http://localhost:8080/web_war_exploded/rest/performance?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
+

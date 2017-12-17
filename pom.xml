@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -35,7 +36,21 @@
             <artifactId>jersey-container-servlet</artifactId>
             <version>2.25.1</version>
         </dependency>
+        <!-- loest: MessageBodyWriter not found for media type=application/json
+        And then register the JacksonFeature in your Application/ResourceConfig subclass...
+         how to register the JacksonFeature: https://stackoverflow.com/questions/18317927/force-glassfish4-to-use-jackson-instead-of-moxy#18318314   -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.25.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.module</groupId>
+                    <artifactId>jackson-module-jaxb-annotations</artifactId>
+                </exclusion>
+            </exclusions>
 
+        </dependency>
 
     </dependencies>
     
