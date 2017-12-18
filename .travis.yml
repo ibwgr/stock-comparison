@@ -3,3 +3,7 @@ jdk:
   - oraclejdk8
 script:
    - mvn test
+notifications:
+  email:
+    on_success: never
+    on_failure: never
