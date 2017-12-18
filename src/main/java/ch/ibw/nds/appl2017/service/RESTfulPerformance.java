@@ -12,6 +12,8 @@ public class RESTfulPerformance {
 
     // http://localhost:8080/web_war_exploded/rest/correlation?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
     // http://localhost:8080/web_war_exploded/rest/performance?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
+
+    // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/correlation?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessage(
