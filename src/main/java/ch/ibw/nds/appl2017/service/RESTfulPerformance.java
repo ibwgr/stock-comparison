@@ -2,6 +2,8 @@ package ch.ibw.nds.appl2017.service;
 
 import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,6 +18,7 @@ public class RESTfulPerformance {
     // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/correlation?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @JacksonFeatures(serializationEnable = { SerializationFeature.INDENT_OUTPUT })
     public Response getMessage(
     //public Stock getMessage(
             @QueryParam("stock1") String stockSymbol1,
@@ -30,20 +33,10 @@ public class RESTfulPerformance {
                 +", from:" + dateFromString +", to:" + dateToString;
         System.out.println(output);
 
-        Stock stock1 = new Stock(stockSymbol1);
-//        Stock stock1 = Stock.createStock(stockSymbol1);
-//        Stock stock2 = Stock.createStock(stockSymbol2);
-//        Stock stock3 = Stock.createStock(stockSymbol3);
-//        Stock stock4 = Stock.createStock(stockSymbol4);
-//        ComparisonInput comparisonInput= new ComparisonInput();
-//        comparisonInput.getStocks().add(stock1);
-//        comparisonInput.getStocks().add(stock2);
-//        comparisonInput.getStocks().add(stock3);
-//        comparisonInput.getStocks().add(stock4);
+        Stock stock1 = Stock.createStock(stockSymbol1);
 
-        //return stock1;
         return Response.status(200).entity(stock1).build();
-        //return Response.status(200).entity(output).build();
+
     }
 
 }
