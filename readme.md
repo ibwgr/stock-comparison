@@ -3,4 +3,15 @@
 
 <b>....</b>
 
-[![Waffle.io - Issues in progress](https://badge.waffle.io/ibwgr/stock-comparison.png?label=in%20progress&title=In%20Progress)](http://waffle.io/ibwgr/stock-comparison)
+<table>
+ <tr>
+  <td>
+  Travis Build/Test Status:
+  </td>
+  <td>
+   <a href="https://travis-ci.org/ibwgr/stock-comparison" target="_blank"><img src="https://travis-ci.org/ibwgr/stock-comparison.svg?branch=master"/></a>
+  </td>
+ </tr>
+</table>
+</br>
+
