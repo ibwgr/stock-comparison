@@ -6,6 +6,9 @@ addons:
     organization: "nerd1-github"
     token:
       secure: Zyxq90nHYkwca6BqErwPd04Ujs+0SK5t/6h3IhD5zlty32Q0UDMjRVY5Eza6j2RlLzYb+vFiPS5sUsPhaab+Mb6GjTc8AVGGs3FtRRSBsGJj6vYoTWC9Z7rqinxciUWlZ4b1ZaFGunmLoJ4p91MsHRGYdS3YSiOs6byJ7xVmX6RJ+DvDa4vW1ngmObNQevPLJZNmUYT68tU/EF9AYcbKwhGngk3ju3yAqNL0SEjbEgZNNnDOOJRi9kTCy+APLIpnepeVlBgl54Z5DuqORBaEmlanIwh65TiYnSlMF+MxieMKF5Sf7lEmoYc4nCxu3DXf45MF0aLSQyX6LmGq7uQIVfOCLE8VSFT/7CO3MGV2hEpPhligYmRdoxhlwRvGYhdRrhUh5G1Pko1XRUmvS9Zcl+RwSw7Zz8ThiKJJRZNEq39RSzy+4ociCokL+kwjslm/a95I8DM1Gh6urx3+rEHXbO+zO49hkBsB9gtC5k8Nuu5zE7tGTLwxEo3cqqvkuqlRhI34riHeQPpPCqLQGoqlUZx2HmB1CGdkc9719avdvm1ZOHtae4q+vOof8cMcTJYUz3EqQDqYu+obvpeaUekDEiITyFF7sZGtHL8Vw+EsUvmJ0ByDjotqNOEGxr6lSg1xh180Bot0Ykisd+HqKPQeJE9dKR24KkgsRrenhAhIfnw=
+    branches:
+      - master
+      - projektsetup
 script:
   #- mvn test
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
