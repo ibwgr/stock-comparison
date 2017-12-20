@@ -18,6 +18,11 @@ public class Stock {
         return createStock(symbol,null);
     }
 
+    @Override
+    public String toString() {
+        return "Stock: " + this.symbol;
+    }
+
     public String getSymbol() {
         return symbol;
     }
