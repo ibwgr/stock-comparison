@@ -19,24 +19,23 @@ import java.util.Date;
 import java.util.List;
 
 @Path("/performance2")
-public class RESTfulPerformance2 {
+public class ComparisonController {
 
     // V2 : hier eine unbestimmte Anzahl Stocks, ist so vom Design her eher fuer zuk. Anwendungen offen
+    // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/correlation?stock1=NESN&stock2=GOOGL&stock3=ORCL&stock4=LISN&dateFrom=20130313&dateTo=20171231
 
-    // http://localhost:8080/web_war_exploded/rest/performance2?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JacksonFeatures(serializationEnable = { SerializationFeature.INDENT_OUTPUT })
-    public Response getMessage(
-            //public Stock getMessage(
+    public Response getPerformance(
             @QueryParam("stock") final List<String> stocks,
             @QueryParam("dateFrom") String dateFromString,
             @QueryParam("dateTo") String dateToString) {
 
-        String output =  "***************** Ressource:Performance, stock1:" + stocks.get(0) +", stock2:" + stocks.get(1)
-                +", stock3:" + stocks.get(2)+", stock3:" + stocks.get(3)
-                +", from:" + dateFromString +", to:" + dateToString;
-        System.out.println(output);
+//        String output =  "***************** Ressource:Performance, stock1:" + stocks.get(0) +", stock2:" + stocks.get(1)
+//                +", stock3:" + stocks.get(2)+", stock3:" + stocks.get(3)
+//                +", from:" + dateFromString +", to:" + dateToString;
+//        System.out.println(output);
 
         Date dateFrom = null;
         Date dateTo = null;
@@ -47,7 +46,6 @@ public class RESTfulPerformance2 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         Stock stock1 = Stock.createStock( stocks.get(0));
         Stock stock2 = Stock.createStock( stocks.get(1));
         Stock stock3 = Stock.createStock( stocks.get(2));

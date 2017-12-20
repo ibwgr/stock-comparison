@@ -14,6 +14,6 @@ import java.util.Set;
 @ApplicationPath("/rest")
 public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>(Arrays.asList(RESTfulCorrelation.class, RESTfulPerformance.class, RESTfulPerformance2.class, JacksonFeature.class));
+        return new HashSet<Class<?>>(Arrays.asList(ComparisonController.class, JacksonFeature.class));
     }
 }
