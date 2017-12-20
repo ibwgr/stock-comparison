@@ -1,21 +1,19 @@
-sudo: false
-install: true
-dist: trusty
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 addons:
   sonarcloud:
-    organization: "nerd1-github"
+    organization: nerd1-github
     token:
-      secure: "Zyxq90nHYkwca6BqErwPd04Ujs+0SK5t/6h3IhD5zlty32Q0UDMjRVY5Eza6j2RlLzYb+vFiPS5sUsPhaab+Mb6GjTc8AVGGs3FtRRSBsGJj6vYoTWC9Z7rqinxciUWlZ4b1ZaFGunmLoJ4p91MsHRGYdS3YSiOs6byJ7xVmX6RJ+DvDa4vW1ngmObNQevPLJZNmUYT68tU/EF9AYcbKwhGngk3ju3yAqNL0SEjbEgZNNnDOOJRi9kTCy+APLIpnepeVlBgl54Z5DuqORBaEmlanIwh65TiYnSlMF+MxieMKF5Sf7lEmoYc4nCxu3DXf45MF0aLSQyX6LmGq7uQIVfOCLE8VSFT/7CO3MGV2hEpPhligYmRdoxhlwRvGYhdRrhUh5G1Pko1XRUmvS9Zcl+RwSw7Zz8ThiKJJRZNEq39RSzy+4ociCokL+kwjslm/a95I8DM1Gh6urx3+rEHXbO+zO49hkBsB9gtC5k8Nuu5zE7tGTLwxEo3cqqvkuqlRhI34riHeQPpPCqLQGoqlUZx2HmB1CGdkc9719avdvm1ZOHtae4q+vOof8cMcTJYUz3EqQDqYu+obvpeaUekDEiITyFF7sZGtHL8Vw+EsUvmJ0ByDjotqNOEGxr6lSg1xh180Bot0Ykisd+HqKPQeJE9dKR24KkgsRrenhAhIfnw="
+      secure: b2+qBzT9sY3d+Q3nh6sbdlWufl6qsYFw1jI6/xx+PPjlhNRgeoi9hcN3l3Eyuzz99u26PchJtRkp38F6GpSMRv6odpYKHrgHkVi+oELB0ptM0a7x6RYsw2sObX6KtCDYQRRnWuyM+qgzjNgmzJqjXMWG9PlLlzRHdlauT9PoJBAT1aXATYMCQTrWHbNHM2Sadp7RDG6F8AQlbcpRPcC2HSyy/cEX8HoJIqQb0nIUA4mcXZNe5p3Q2sxkUMZJWKYXpp/E4Q33Z1mqewNKDv57ZeRJR7XPza4EFOv19ig4UpXsDgG56DF765anbqgzMdIyehbwwcR95uPNtyANhjVSUxU4+/RlwkuHuG6v7DYV5mac+xtFRyt9NXOKT40ESET+RN4JYYd3mewEwxGOxIHIS6KihUgnQIuNOkkKc+k63b2/jrQkNVYbbkdQQQEs+ML46TFL30phly0vETK0vhWgfCkbJXd6UljGnxT8vVU+Zm1MXUbEmc8uVkEynmMhiX6PlJC3EV743GPieDjfbBDmWgoJGDMZYZgkJv6y8LlCx5O77NmGjN8yKGA7POy52MOMaOaFYFuKxDsJ2lDJAFkQrNXzF4VRpf7xLXWeU2gF1TGyY2FSi3ITv7gMnjbdFrvvha2DXQHpCBoDKr4xyrrjjMn2HIYgl29SE9Od3g2UnbA=
     branches:
-      - master
-      - projektsetup
+    - master
+    - projektsetup
 script:
-  #- mvn test
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 notifications:
   email:
     on_success: never
     on_failure: never
+dd:
+  secure: b2+qBzT9sY3d+Q3nh6sbdlWufl6qsYFw1jI6/xx+PPjlhNRgeoi9hcN3l3Eyuzz99u26PchJtRkp38F6GpSMRv6odpYKHrgHkVi+oELB0ptM0a7x6RYsw2sObX6KtCDYQRRnWuyM+qgzjNgmzJqjXMWG9PlLlzRHdlauT9PoJBAT1aXATYMCQTrWHbNHM2Sadp7RDG6F8AQlbcpRPcC2HSyy/cEX8HoJIqQb0nIUA4mcXZNe5p3Q2sxkUMZJWKYXpp/E4Q33Z1mqewNKDv57ZeRJR7XPza4EFOv19ig4UpXsDgG56DF765anbqgzMdIyehbwwcR95uPNtyANhjVSUxU4+/RlwkuHuG6v7DYV5mac+xtFRyt9NXOKT40ESET+RN4JYYd3mewEwxGOxIHIS6KihUgnQIuNOkkKc+k63b2/jrQkNVYbbkdQQQEs+ML46TFL30phly0vETK0vhWgfCkbJXd6UljGnxT8vVU+Zm1MXUbEmc8uVkEynmMhiX6PlJC3EV743GPieDjfbBDmWgoJGDMZYZgkJv6y8LlCx5O77NmGjN8yKGA7POy52MOMaOaFYFuKxDsJ2lDJAFkQrNXzF4VRpf7xLXWeU2gF1TGyY2FSi3ITv7gMnjbdFrvvha2DXQHpCBoDKr4xyrrjjMn2HIYgl29SE9Od3g2UnbA=
