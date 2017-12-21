@@ -17,10 +17,13 @@ import java.io.InputStream;
 import static org.junit.Assert.*;
 
 
-public class RESTfulPerformance2Test {
+public class ComparisonControllerIntegrationTest {
 
     private static final String SERVICE_URL
-            = "http://localhost:8080/web_war_exploded/rest/performance2?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231";
+            = "http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/performance2?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231";
+
+
+    // todo : https://blog.codecentric.de/en/2012/05/writing-lightweight-rest-integration-tests-with-the-jersey-test-framework/
 
     @Test
     @Ignore   // todo
