@@ -6,28 +6,22 @@ public class Stock {
     private String symbol;
     private List<TimeSerie> timeSeries;
 
-    // todo constructor entfernen
-    public Stock(String symbol, List<TimeSerie> timeSeries) {
+    private Stock(String symbol, List<TimeSerie> timeSeries) {
         this.symbol = symbol;
         this.timeSeries = timeSeries;
     }
-    public Stock(String symbol) {
-        this.symbol = symbol;
+
+    public static Stock createStock (String symbol, List<TimeSerie> timeSeries) {
+        return new Stock(symbol,timeSeries);
     }
-    //    private Stock(String symbol, List<TimeSerie> timeSeries) {
-//        this.symbol = symbol;
-//        this.timeSeries = timeSeries;
-//    }
-//    private Stock(String symbol) {
-//        this.symbol = symbol;
-//    }
-//
-//    public static Stock createStock (String symbol, List<TimeSerie> timeSeries) {
-//        return new Stock(symbol,timeSeries);
-//    }
-//    public static Stock createStock (String symbol) {
-//        return new Stock(symbol);
-//    }
+    public static Stock createStock (String symbol) {
+        return createStock(symbol,null);
+    }
+
+    @Override
+    public String toString() {
+        return "Stock: " + this.symbol;
+    }
 
     public String getSymbol() {
         return symbol;
