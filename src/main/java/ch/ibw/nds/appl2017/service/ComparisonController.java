@@ -4,16 +4,13 @@ import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,18 +33,18 @@ public class ComparisonController {
 
         Date dateFrom = getDateFromApiDateString(fromDateString);
         Date dateTo = getDateFromApiDateString(toDateString);
-        ArrayList stockList = convertToStockList(stockSymbols);
+        List<Stock> stockList = convertToStockList(stockSymbols);
 
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockList,dateFrom,dateTo);
-        System.out.println(comparisonInput);
+        System.out.println(comparisonInput.toString());
 
         // todo hier natuerlich comparisonOutput
         return Response.status(200).entity(comparisonInput).build();
     }
 
 
-    public static ArrayList convertToStockList(List<String> stockSymbols) {
-        ArrayList stockList = new ArrayList();
+    public static List convertToStockList(List<String> stockSymbols) {
+        List<Stock> stockList = new ArrayList();
         for (String stockSymbol: stockSymbols) {
             stockList.add(Stock.createStock(stockSymbol));
         }
@@ -58,7 +55,7 @@ public class ComparisonController {
         try {
             return Const.REST_API_DATEFORMAT.parse(dateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println(e.getStackTrace()); // todo exceptionhandling
         }
         return null; // todo null ist nicht gut
     }
