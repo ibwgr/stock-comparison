@@ -20,7 +20,8 @@ public class Stock {
 
     @Override
     public String toString() {
-        return "Stock: " + this.symbol;
+        StringBuilder stringBuilder = new StringBuilder("Stock: ");
+        return stringBuilder.append(this.symbol).toString();
     }
 
     public String getSymbol() {

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.mscharhag.oleaster.matcher.Matchers.expect;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
@@ -44,13 +45,13 @@ public class ComparisonControllerTest {{
 
             String stockString1 = "NESN";
             String stockString2 = "GOOGL";
-            ArrayList<String> stockStringList = new ArrayList<>();
+            List<String> stockStringList = new ArrayList<>();
             stockStringList.add((stockString1));
             stockStringList.add((stockString2));
 
             Stock stock1 = Stock.createStock("NESN");
             Stock stock2 = Stock.createStock("GOOGL");
-            ArrayList<Stock> stockList = new ArrayList();
+            List<Stock> stockList = new ArrayList();
             stockList.add(stock1);
             stockList.add(stock2);
 
