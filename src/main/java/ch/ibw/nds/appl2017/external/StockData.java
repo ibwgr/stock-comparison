@@ -4,11 +4,15 @@ import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dieterbiedermann on 18.12.17.
  */
 public class  StockData {
+
+    private AlphaVantage alphaVantage = AlphaVantage.create();
 
     private StockData(){
 
@@ -18,12 +22,16 @@ public class  StockData {
         return new StockData();
     }
 
-    public ArrayList<Stock> getAllStocks(ComparisonInput comparisonInput){
-        return new ArrayList<>();
+    public List<Stock> getAllStocks(ComparisonInput comparisonInput){
+
+//        List<Stock> stocks = comparisonInput.getStocks();
+        comparisonInput.getStocks().forEach(stock -> getStock(stock, comparisonInput.getDateFrom(), comparisonInput.getDateTo()));
+
+        return comparisonInput.getStocks();
     }
 
-    public Stock getStock(){
-        return Stock.createStock("");
+    public void getStock(Stock stock, Date dateFrom, Date dateTo){
+        alphaVantage.getStock(stock, dateFrom, dateTo);
     }
 
 }
