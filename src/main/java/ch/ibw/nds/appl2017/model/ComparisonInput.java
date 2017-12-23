@@ -2,8 +2,6 @@ package ch.ibw.nds.appl2017.model;
 
 import ch.ibw.nds.appl2017.service.Const;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,14 +23,14 @@ public class ComparisonInput {
 
     @Override
     public String toString() {
-        String out ="Comparison-Input: " ;
+        StringBuilder stringBuilder = new StringBuilder("Comparison-Input: ");
         for(Stock stock : this.stocks) {
-            out += stock;
-            out += " ";
+            stringBuilder.append(stock);
+            stringBuilder.append(" ");
         }
-        out += " DateFrom: " +Const.REST_API_DATEFORMAT.format(this.dateFrom);
-        out += " DateTo: " +Const.REST_API_DATEFORMAT.format(this.dateTo);
-        return out;
+        stringBuilder.append(" DateFrom: " +Const.REST_API_DATEFORMAT.format(this.dateFrom));
+        stringBuilder.append(" DateTo: " +Const.REST_API_DATEFORMAT.format(this.dateTo));
+        return stringBuilder.toString();
     }
 
     public List<Stock> getStocks() {

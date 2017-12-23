@@ -15,3 +15,5 @@
 </table>
 </br>
 
+<a href=""><img src="https://sonarcloud.io/api/badges/gate?key=groupId:stock-comparison:projektsetup"/></a>
+

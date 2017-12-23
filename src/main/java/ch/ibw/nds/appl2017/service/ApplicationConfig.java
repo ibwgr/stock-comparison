@@ -1,5 +1,6 @@
 package ch.ibw.nds.appl2017.service;
 
+//import org.apache.log4j.BasicConfigurator;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.ApplicationPath;
@@ -13,6 +14,8 @@ import java.util.Set;
 
 @ApplicationPath("/rest")
 public class ApplicationConfig extends Application {
+
+    @Override
     public Set<Class<?>> getClasses() {
         return new HashSet<Class<?>>(Arrays.asList(ComparisonController.class, JacksonFeature.class));
     }
