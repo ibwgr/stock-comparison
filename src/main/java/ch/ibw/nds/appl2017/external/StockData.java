@@ -23,10 +23,7 @@ public class  StockData {
     }
 
     public List<Stock> getAllStocks(ComparisonInput comparisonInput){
-
-//        List<Stock> stocks = comparisonInput.getStocks();
         comparisonInput.getStocks().forEach(stock -> getStock(stock, comparisonInput.getDateFrom(), comparisonInput.getDateTo()));
-
         return comparisonInput.getStocks();
     }
 
