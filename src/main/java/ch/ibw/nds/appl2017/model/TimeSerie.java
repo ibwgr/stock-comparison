@@ -7,15 +7,14 @@ public class TimeSerie {
     private Date closeDate;
 
 
-//    private TimeSerie(double closePrice, Date closeDate){
-//        this.closePrice = closePrice;
-//        this.closeDate = closeDate;
-//    }
-//
-//    public static TimeSerie createTimeSerie(double closePrice, Date closeDate) {
-//        return new TimeSerie(closePrice,closeDate);
-//    }
+    private TimeSerie(double closePrice, Date closeDate){
+        this.closePrice = closePrice;
+        this.closeDate = closeDate;
+    }
 
+    public static TimeSerie create(double closePrice, Date closeDate) {
+        return new TimeSerie(closePrice,closeDate);
+    }
 
     public double getClosePrice() {
         return closePrice;
@@ -32,4 +31,5 @@ public class TimeSerie {
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
     }
+
 }

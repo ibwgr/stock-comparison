@@ -1,7 +1,151 @@
 package ch.ibw.nds.appl2017.external;
 
+import ch.ibw.nds.appl2017.model.Stock;
+import ch.ibw.nds.appl2017.model.TimeSerie;
+import ch.ibw.nds.appl2017.service.Const;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by dieterbiedermann on 18.12.17.
  */
 public class AlphaVantage {
+
+    public static final String HTTPS = "https";
+    public static final String HOST_NAME = "www.alphavantage.co";
+    public static final String REST_PATH = "query";
+    public static final String FUNCTION = "function";
+    public static final String TIME_SERIES_DAILY = "TIME_SERIES_DAILY";
+    public static final String SYMBOL = "symbol";
+    public static final String OUTPUTSIZE = "outputsize";
+    public static final String OUTPUTSIZE_FULL = "full";
+    public static final String APIKEY = "apikey";
+    public static final String APIKEY_VALUE = "IC2ZRP67FJJQ79DV";
+    public static final String UTF_8 = "UTF-8";
+    public static final String JSON_TIME_SERIES_DAILY1 = "Time Series (Daily)";
+    public static final String JSON_CLOSE_PRICE = "4. close";
+
+    private AlphaVantage() {
+
+    }
+
+    public static AlphaVantage create() {
+        return new AlphaVantage();
+    }
+
+    public void getStock(Stock stock, Date dateFrom, Date dateTo) {
+        JSONObject jsonObject = callApi(stock.getSymbol());
+        List<TimeSerie> timeSeries = findTimeSeries(dateFrom, dateTo, jsonObject);
+        stock.setTimeSeries(timeSeries);
+    }
+
+    public List<TimeSerie> findTimeSeries(Date dateFrom, Date dateTo, JSONObject jsonObject) {
+        List<TimeSerie> timeSeries = new ArrayList<>();
+        JSONObject jsonTimeSeries = getJsonTimeSeries(jsonObject);
+        Iterator<?> keys = jsonTimeSeries.keys();
+        while( keys.hasNext() ) {
+            String key = (String)keys.next();
+            Double closePrice = getClosePriceFromJson(jsonTimeSeries, key);
+            Date closeDate = getCloseDateFromKey(key);
+            checkDateAndAddTimeSeries(dateFrom, dateTo, timeSeries, closePrice, closeDate);
+        }
+        return timeSeries;
+    }
+
+    private JSONObject getJsonTimeSeries(JSONObject jsonObject) {
+        JSONObject jsonTimeSeries = null;
+        try {
+            jsonTimeSeries = jsonObject.getJSONObject(JSON_TIME_SERIES_DAILY1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonTimeSeries;
+    }
+
+    private Date getCloseDateFromKey(String key) {
+        Date closeDate = null;
+        try {
+            closeDate = Const.ALPHA_DATEFORMAT.parse(key);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return closeDate;
+    }
+
+    private Double getClosePriceFromJson(JSONObject jsonTimeSeries, String key) {
+        Double closePrice = 0d;
+        try {
+            Object jsonTimeSeriesKey = jsonTimeSeries.get(key);
+            if (jsonTimeSeriesKey instanceof JSONObject) {
+                closePrice = ((JSONObject) jsonTimeSeriesKey).getDouble(JSON_CLOSE_PRICE);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return closePrice;
+    }
+
+    public void checkDateAndAddTimeSeries(Date dateFrom, Date dateTo, List<TimeSerie> timeSeries, Double closePrice, Date closeDate) {
+        Date dateFromMinus1 = DateUtils.asDate(DateUtils.asLocalDate(dateFrom).minusDays(1));
+        Date dateToPlus1 = DateUtils.asDate(DateUtils.asLocalDate(dateTo).plusDays(1));
+        if (closeDate.after(dateFromMinus1) && closeDate.before(dateToPlus1)) {
+            //System.out.println(closeDate + " --> " + closePrice);
+            timeSeries.add(TimeSerie.create(closePrice, closeDate));
+        }
+    }
+
+    public JSONObject callApi(String symbol) {
+        URIBuilder uriBuilder = new URIBuilder()
+                .setScheme(HTTPS)
+                .setHost(HOST_NAME)
+                .setPath(REST_PATH)
+                .addParameter(FUNCTION, TIME_SERIES_DAILY)
+                .addParameter(SYMBOL, symbol)
+                .addParameter(OUTPUTSIZE, OUTPUTSIZE_FULL)
+                .addParameter(APIKEY, APIKEY_VALUE);
+
+        HttpUriRequest request = new HttpGet(uriBuilder.toString());
+        HttpResponse httpResponse = getHttpResponse(request);
+        //System.out.println(response.toString());
+        return getJsonResponse(httpResponse);
+    }
+
+    private JSONObject getJsonResponse(HttpResponse httpResponse) {
+        HttpEntity entity = httpResponse.getEntity();
+        JSONObject responseJson = null;
+        try {
+            String responseString = EntityUtils.toString(entity, UTF_8);
+            responseJson = new JSONObject(responseString);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return responseJson;
+    }
+
+    private HttpResponse getHttpResponse(HttpUriRequest request) {
+        HttpResponse httpResponse = null;
+        try {
+            httpResponse = HttpClientBuilder
+                    .create()
+                    .build()
+                    .execute(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return httpResponse;
+    }
 }
