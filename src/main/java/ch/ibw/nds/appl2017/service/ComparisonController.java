@@ -5,8 +5,9 @@ import ch.ibw.nds.appl2017.model.Stock;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,6 +18,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 @Path("/comparison")
 public class ComparisonController {
@@ -31,10 +34,12 @@ public class ComparisonController {
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getCorrelation(
             @QueryParam("stock") final List<String> stockSymbols,
+            @NotNull
+            @Pattern(regexp = Const.REST_API_DATEFORMAT_REGEX_PATTERN)
             @QueryParam("dateFrom") String fromDateString,
+            @NotNull
+            @Pattern(regexp = Const.REST_API_DATEFORMAT_REGEX_PATTERN)
             @QueryParam("dateTo") String toDateString) {
-
-        // todo input validation
 
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
 
@@ -49,11 +54,16 @@ public class ComparisonController {
     @Produces(MediaType.APPLICATION_JSON)
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getPerformance(
+            @Valid
             @QueryParam("stock") final List<String> stockSymbols,
+            @NotNull
+            @Pattern(regexp = "\\d{4}\\d{2}\\d{2}")
             @QueryParam("dateFrom") String fromDateString,
+            @NotNull
+            @Pattern(regexp = "\\d{4}\\d{2}\\d{2}")
             @QueryParam("dateTo") String toDateString) {
 
-        // todo input validation
+        // todo testklasse input val
 
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
 
@@ -78,6 +88,11 @@ public class ComparisonController {
         List<Stock> stockList = new ArrayList();
         for (String stockSymbol: stockSymbols) {
             stockList.add(Stock.createStock(stockSymbol));
+            // todo der validator funktioniert nicht
+            Validator validator = Validation
+                    .buildDefaultValidatorFactory()
+                    .getValidator();
+            validator.validate(Stock.createStock(stockSymbol));
         }
         return stockList;
     }
