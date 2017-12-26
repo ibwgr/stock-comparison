@@ -18,12 +18,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Path("/performance2")
+@Path("/comparison")
 public class ComparisonController {
 
     // V2 : hier eine unbestimmte Anzahl Stocks, ist so vom Design her eher fuer zuk. Anwendungen offen
-    // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/performance2?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
+    // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
+    // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
 
+    @Path("/correlation")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
@@ -42,6 +44,7 @@ public class ComparisonController {
         return Response.status(200).entity(comparisonInput).build();
     }
 
+    @Path("/performance")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
