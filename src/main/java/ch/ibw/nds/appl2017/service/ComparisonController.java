@@ -4,25 +4,20 @@ import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.validation.Validation;
-import javax.validation.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/comparison")
 public class ComparisonController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonController.class);
 
     // V2 : hier eine unbestimmte Anzahl Stocks, ist so vom Design her eher fuer zuk. Anwendungen offen
     // http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
@@ -34,17 +29,12 @@ public class ComparisonController {
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getCorrelation(
             @QueryParam("stock") final List<String> stockSymbols,
-            @NotNull
-            @Pattern(regexp = Const.REST_API_DATEFORMAT_REGEX_PATTERN)
             @QueryParam("dateFrom") String fromDateString,
-            @NotNull
-            @Pattern(regexp = Const.REST_API_DATEFORMAT_REGEX_PATTERN)
             @QueryParam("dateTo") String toDateString) {
 
+        validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
-
         // todo call berechnung
-
         // todo hier natuerlich comparisonOutput
         return Response.status(200).entity(comparisonInput).build();
     }
@@ -54,23 +44,43 @@ public class ComparisonController {
     @Produces(MediaType.APPLICATION_JSON)
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getPerformance(
-            @Valid
             @QueryParam("stock") final List<String> stockSymbols,
-            @NotNull
-            @Pattern(regexp = "\\d{4}\\d{2}\\d{2}")
             @QueryParam("dateFrom") String fromDateString,
-            @NotNull
-            @Pattern(regexp = "\\d{4}\\d{2}\\d{2}")
             @QueryParam("dateTo") String toDateString) {
 
-        // todo testklasse input val
-
+        validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
-
         // todo call berechnung
-
         // todo hier natuerlich comparisonOutput
         return Response.status(200).entity(comparisonInput).build();
+    }
+
+
+    // todo unschoen
+    public void validateInput(List<String> stockSymbols, String fromDateString, String toDateString) {
+
+        if (fromDateString == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        if (!fromDateString.matches(Const.REST_API_DATEFORMAT_REGEX_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (toDateString == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        if (!toDateString.matches(Const.REST_API_DATEFORMAT_REGEX_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (stockSymbols == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        for (String stockSymbol : stockSymbols) {
+            if (!stockSymbol.matches("^[A-Z]{1,5}$")) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+        }
     }
 
 
@@ -88,24 +98,25 @@ public class ComparisonController {
         List<Stock> stockList = new ArrayList();
         for (String stockSymbol: stockSymbols) {
             stockList.add(Stock.createStock(stockSymbol));
-            // todo der validator funktioniert nicht
-//            Validator validator = Validation
-//                    .buildDefaultValidatorFactory()
-//                    .getValidator();
-//            validator.validate(Stock.createStock(stockSymbol));
         }
         return stockList;
     }
 
     public static Date getDateFromApiDateString(String dateString) {
+        Date testDate = null;
         try {
-            return Const.REST_API_DATEFORMAT.parse(dateString);
-        } catch (ParseException e) {
-            System.out.println(e.getStackTrace()); // todo exceptionhandling
+            testDate = Const.REST_API_DATEFORMAT.parse(dateString);
         }
-        return null; // todo null ist nicht gut
+        catch (ParseException e) {
+            LOGGER.warn("Wrong Date Format: " +dateString);
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        if (!Const.REST_API_DATEFORMAT.format(testDate).equals(dateString)) {
+            LOGGER.warn("Wrong Date Format: " +dateString);
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return testDate;
+
     }
-
-
 
 }
