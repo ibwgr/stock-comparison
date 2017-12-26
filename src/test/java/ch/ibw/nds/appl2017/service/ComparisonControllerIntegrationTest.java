@@ -42,9 +42,7 @@ public class ComparisonControllerIntegrationTest {
         String responseString = EntityUtils.toString(entity, "UTF-8");
         System.out.println(responseString);
 
-        assertEquals(httpResponse
-                .getStatusLine()
-                .getStatusCode(), HttpStatus.SC_OK);
+        assertEquals(HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
     }
 
 }

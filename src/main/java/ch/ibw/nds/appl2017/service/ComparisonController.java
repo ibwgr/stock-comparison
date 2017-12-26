@@ -4,6 +4,9 @@ import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -23,7 +26,25 @@ public class ComparisonController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @JacksonFeatures(serializationEnable = { SerializationFeature.INDENT_OUTPUT })
+    @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
+    public Response getCorrelation(
+            @QueryParam("stock") final List<String> stockSymbols,
+            @QueryParam("dateFrom") String fromDateString,
+            @QueryParam("dateTo") String toDateString) {
+
+        // todo input validation
+
+        ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
+
+        // todo call berechnung
+
+        // todo hier natuerlich comparisonOutput
+        return Response.status(200).entity(comparisonInput).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getPerformance(
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") String fromDateString,
@@ -31,17 +52,24 @@ public class ComparisonController {
 
         // todo input validation
 
+        ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
+
+        // todo call berechnung
+
+        // todo hier natuerlich comparisonOutput
+        return Response.status(200).entity(comparisonInput).build();
+    }
+
+
+    public ComparisonInput buildComparisonInput(List<String> stockSymbols, String fromDateString, String toDateString) {
         Date dateFrom = getDateFromApiDateString(fromDateString);
         Date dateTo = getDateFromApiDateString(toDateString);
         List<Stock> stockList = convertToStockList(stockSymbols);
 
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockList,dateFrom,dateTo);
         System.out.println(comparisonInput.toString());
-
-        // todo hier natuerlich comparisonOutput
-        return Response.status(200).entity(comparisonInput).build();
+        return comparisonInput;
     }
-
 
     public static List convertToStockList(List<String> stockSymbols) {
         List<Stock> stockList = new ArrayList();
