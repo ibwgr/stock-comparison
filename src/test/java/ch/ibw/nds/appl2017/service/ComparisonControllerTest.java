@@ -1,5 +1,6 @@
 package ch.ibw.nds.appl2017.service;
 
+import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
@@ -25,7 +26,6 @@ public class ComparisonControllerTest {{
 
     describe("Test Technical Helper Methods", () -> {
         it("should transform API String to Date", () -> {
-
             Date apiDatum = ComparisonController.getDateFromApiDateString("20171231");
 
             Calendar cal = Calendar.getInstance();
@@ -40,9 +40,8 @@ public class ComparisonControllerTest {{
     });
 
 
-    describe("Test Stock Help Methods", () -> {
+    describe("Test Stock/ComparisonInput Building Methods", () -> {
         it("should transform a Stock-Symbol List to a Stock-Object List", () -> {
-
             String stockString1 = "NESN";
             String stockString2 = "GOOGL";
             List<String> stockStringList = new ArrayList<>();
@@ -57,6 +56,26 @@ public class ComparisonControllerTest {{
 
             expect(ComparisonController.convertToStockList(stockStringList).size()).toEqual(stockList.size());
         });
+
+        it("should bundle Elements for a ComparisonInput Object", () -> {
+            String stockString1 = "NESN";
+            String stockString2 = "GOOGL";
+            List<String> stockStringList = new ArrayList<>();
+            stockStringList.add((stockString1));
+            stockStringList.add((stockString2));
+
+            String fromDateString = "20170101";
+            String toDateString = "20171231";
+
+            ComparisonController comparisonController = new ComparisonController();
+            ComparisonInput comparisonInput = comparisonController.buildComparisonInput (stockStringList, fromDateString, toDateString);
+
+            expect(comparisonInput.getStocks().size()).toEqual(stockStringList.size());
+            expect(comparisonInput.getStocks().get(0).getSymbol()).toEqual(stockString1);
+        });
     });
+
+
+
 
 }}
