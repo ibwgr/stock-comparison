@@ -89,10 +89,10 @@ public class ComparisonController {
         for (String stockSymbol: stockSymbols) {
             stockList.add(Stock.createStock(stockSymbol));
             // todo der validator funktioniert nicht
-            Validator validator = Validation
-                    .buildDefaultValidatorFactory()
-                    .getValidator();
-            validator.validate(Stock.createStock(stockSymbol));
+//            Validator validator = Validation
+//                    .buildDefaultValidatorFactory()
+//                    .getValidator();
+//            validator.validate(Stock.createStock(stockSymbol));
         }
         return stockList;
     }
