@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Stock {
 
-    //todo input
-    //@Pattern(regexp = "^[A-Z]{4,5}$", message = "Invalid stock symbol length (not between 4 and 5)")
     private String symbol;
 
     private List<TimeSerie> timeSeries;
