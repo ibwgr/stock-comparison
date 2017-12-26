@@ -19,11 +19,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by dieterbiedermann on 18.12.17.
  */
 public class AlphaVantage {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
 
     public static final String HTTPS = "https";
     public static final String HOST_NAME = "www.alphavantage.co";
@@ -71,7 +75,7 @@ public class AlphaVantage {
         try {
             jsonTimeSeries = jsonObject.getJSONObject(JSON_TIME_SERIES_DAILY1);
         } catch (JSONException e) {
-            e.printStackTrace();
+            LOGGER.trace("Parsing time series from JSON response failed", e);
         }
         return jsonTimeSeries;
     }
@@ -81,7 +85,7 @@ public class AlphaVantage {
         try {
             closeDate = Const.ALPHA_DATEFORMAT.parse(key);
         } catch (ParseException e) {
-            e.printStackTrace();
+            LOGGER.trace("Parsing date from JSON response failed", e);
         }
         return closeDate;
     }
@@ -94,7 +98,7 @@ public class AlphaVantage {
                 closePrice = ((JSONObject) jsonTimeSeriesKey).getDouble(JSON_CLOSE_PRICE);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            LOGGER.trace("Parsing closing price from JSON response failed", e);
         }
         return closePrice;
     }
@@ -103,7 +107,7 @@ public class AlphaVantage {
         Date dateFromMinus1 = DateUtils.asDate(DateUtils.asLocalDate(dateFrom).minusDays(1));
         Date dateToPlus1 = DateUtils.asDate(DateUtils.asLocalDate(dateTo).plusDays(1));
         if (closeDate.after(dateFromMinus1) && closeDate.before(dateToPlus1)) {
-            //System.out.println(closeDate + " --> " + closePrice);
+            LOGGER.info("Add TimeSeries with date {} and price {}", closeDate, closePrice);
             timeSeries.add(TimeSerie.create(closePrice, closeDate));
         }
     }
@@ -120,7 +124,6 @@ public class AlphaVantage {
 
         HttpUriRequest request = new HttpGet(uriBuilder.toString());
         HttpResponse httpResponse = getHttpResponse(request);
-        //System.out.println(response.toString());
         return getJsonResponse(httpResponse);
     }
 
@@ -131,7 +134,7 @@ public class AlphaVantage {
             String responseString = EntityUtils.toString(entity, UTF_8);
             responseJson = new JSONObject(responseString);
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            LOGGER.trace("Parsing JSON response failed", e);
         }
         return responseJson;
     }
@@ -144,7 +147,7 @@ public class AlphaVantage {
                     .build()
                     .execute(request);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.trace("Http request failed", e);
         }
         return httpResponse;
     }
