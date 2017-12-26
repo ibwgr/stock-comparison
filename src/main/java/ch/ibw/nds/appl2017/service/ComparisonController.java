@@ -29,8 +29,8 @@ public class ComparisonController {
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getCorrelation(
             @QueryParam("stock") final List<String> stockSymbols,
-            @QueryParam("dateFrom") String fromDateString,
-            @QueryParam("dateTo") String toDateString) {
+            @QueryParam("dateFrom") final String fromDateString,
+            @QueryParam("dateTo") final String toDateString) {
 
         validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
@@ -45,8 +45,8 @@ public class ComparisonController {
     @JacksonFeatures(serializationEnable = {SerializationFeature.INDENT_OUTPUT})
     public Response getPerformance(
             @QueryParam("stock") final List<String> stockSymbols,
-            @QueryParam("dateFrom") String fromDateString,
-            @QueryParam("dateTo") String toDateString) {
+            @QueryParam("dateFrom") final String fromDateString,
+            @QueryParam("dateTo") final String toDateString) {
 
         validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = buildComparisonInput(stockSymbols, fromDateString, toDateString);
@@ -90,7 +90,7 @@ public class ComparisonController {
         List<Stock> stockList = convertToStockList(stockSymbols);
 
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockList,dateFrom,dateTo);
-        System.out.println(comparisonInput.toString());
+        LOGGER.debug(comparisonInput.toString());
         return comparisonInput;
     }
 
@@ -116,7 +116,6 @@ public class ComparisonController {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         return testDate;
-
     }
 
 }
