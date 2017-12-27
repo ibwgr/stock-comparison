@@ -58,14 +58,12 @@ public class ComparisonController {
 
     // todo unschoen
     public void validateInput(List<String> stockSymbols, String fromDateString, String toDateString) {
-
         if (fromDateString == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         if (!fromDateString.matches(Const.REST_API_DATEFORMAT_REGEX_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
         if (toDateString == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -108,11 +106,11 @@ public class ComparisonController {
             testDate = Const.REST_API_DATEFORMAT.parse(dateString);
         }
         catch (ParseException e) {
-            LOGGER.warn("Wrong Date Format: " +dateString);
+            LOGGER.warn("Wrong Date Format: {0}", dateString);
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         if (!Const.REST_API_DATEFORMAT.format(testDate).equals(dateString)) {
-            LOGGER.warn("Wrong Date Format: " +dateString);
+            LOGGER.warn("Wrong Date Format: {0}", dateString);
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         return testDate;

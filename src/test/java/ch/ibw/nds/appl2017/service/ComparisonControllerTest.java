@@ -19,7 +19,6 @@ import static java.util.Calendar.DECEMBER;
 @RunWith(OleasterRunner.class)
 public class ComparisonControllerTest {{
 
-
     String stockString1 = "NESN";
     String stockString2 = "GOOGL";
     String stockString3 = "AI";
