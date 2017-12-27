@@ -21,11 +21,9 @@ public class ComparisonControllerIntegrationTest {
     private static final String SERVICE_URL
             = "http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/performance2?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231";
 
-
     // todo : https://blog.codecentric.de/en/2012/05/writing-lightweight-rest-integration-tests-with-the-jersey-test-framework/
-
-    @Test
-    @Ignore   // todo
+    //@Test
+    //@Ignore
     public void givenGetAllEmployees_whenCorrectRequest_thenResponseCodeSuccess()
             throws ClientProtocolException, IOException {
 
@@ -35,8 +33,6 @@ public class ComparisonControllerIntegrationTest {
                 .create()
                 .build()
                 .execute(request);
-
-        // todo temp.
         HttpEntity entity = httpResponse.getEntity();
         String responseString = EntityUtils.toString(entity, "UTF-8");
         System.out.println(responseString);
