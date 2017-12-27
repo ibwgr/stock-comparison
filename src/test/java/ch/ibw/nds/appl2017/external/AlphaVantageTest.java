@@ -24,7 +24,6 @@ public class AlphaVantageTest {{
 
     describe("getStock", () -> {
         it("should add TimeSeries to Stock for symbol", () -> {
-
             AlphaVantage alphaVantage = AlphaVantage.create();
             Stock stock = Stock.createStock("msft");
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
@@ -34,11 +33,21 @@ public class AlphaVantageTest {{
 
             expect(stock.getTimeSeries().size()).toEqual(3);
         });
+
+        it("should return no timeseries for not existing symbol", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+            Stock stock = Stock.createStock("aaaaa");
+            Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
+            Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
+
+            alphaVantage.getStock(stock, dateFrom, dateTo);
+
+            expect(stock.getTimeSeries()).toBeNull();
+        });
     });
 
     describe("callApi", () -> {
         it("should return timeseries data for correct symbol", () -> {
-
             AlphaVantage alphaVantage = AlphaVantage.create();
 
             JSONObject jsonObject = alphaVantage.callApi("MSFT");
@@ -115,6 +124,37 @@ public class AlphaVantageTest {{
             List<TimeSerie> result = alphaVantage.findTimeSeries(dateFrom, dateTo, jsonObject);
 
             expect(result.size()).toEqual(3);
+            expect(result.get(2).getCloseDate()).toEqual(Const.ALPHA_DATEFORMAT.parse("2017-12-18"));
+            expect(result.get(2).getClosePrice()).toEqual(86.38d);
+            expect(result.get(1).getCloseDate()).toEqual(Const.ALPHA_DATEFORMAT.parse("2017-12-19"));
+            expect(result.get(1).getClosePrice()).toEqual(85.83d);
+            expect(result.get(0).getCloseDate()).toEqual(Const.ALPHA_DATEFORMAT.parse("2017-12-20"));
+            expect(result.get(0).getClosePrice()).toEqual(85.52d);
+        });
+
+        it("should return no time series", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+            Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
+            Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "    \"Meta Data\": {\n" +
+                        "        \"1. Information\": \"Daily Prices (open, high, low, close) and Volumes\",\n" +
+                        "        \"2. Symbol\": \"MSFT\",\n" +
+                        "        \"3. Last Refreshed\": \"2017-12-22\",\n" +
+                        "        \"4. Output Size\": \"Compact\",\n" +
+                        "        \"5. Time Zone\": \"US/Eastern\"\n" +
+                        "    }\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            List<TimeSerie> result = alphaVantage.findTimeSeries(dateFrom, dateTo, jsonObject);
+
+            expect(result.size()).toEqual(0);
         });
     });
 
