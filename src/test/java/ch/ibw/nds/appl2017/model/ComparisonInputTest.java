@@ -1,7 +1,5 @@
-package ch.ibw.nds.appl2017.service;
+package ch.ibw.nds.appl2017.model;
 
-import ch.ibw.nds.appl2017.model.ComparisonInput;
-import ch.ibw.nds.appl2017.model.Stock;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 

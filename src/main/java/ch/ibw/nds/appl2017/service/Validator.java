@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class Validator {
-    // todo unschoen
+
     public static void validateInput(List<String> stockSymbols, String fromDateString, String toDateString) {
         if (fromDateString == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);

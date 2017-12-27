@@ -8,14 +8,12 @@ import org.junit.runner.RunWith;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mscharhag.oleaster.matcher.Matchers.expect;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
-import static java.util.Calendar.DECEMBER;
 
 @RunWith(OleasterRunner.class)
 public class ComparisonControllerTest {{
@@ -47,8 +45,8 @@ public class ComparisonControllerTest {{
         });
     });
 
-    describe("Test Service Method", () -> {
-        it("should return http response code 200", () -> {
+    describe("Test Service Method With Good Parameters", () -> {
+        it("should return http response code 200 (ok) on getPerformance", () -> {
             ComparisonController comparisonController = new ComparisonController();
             Response response = comparisonController.getPerformance(stockStringList, fromDateString, toDateString);
             System.out.println(response.getStatus());
@@ -56,7 +54,22 @@ public class ComparisonControllerTest {{
             System.out.println(response.getEntity().toString());
             expect(response.getStatus()).toEqual(200);
         });
-
+        it("should return http response code 200 (ok) on getCorrelation", () -> {
+            ComparisonController comparisonController = new ComparisonController();
+            Response response = comparisonController.getCorrelation(stockStringList, fromDateString, toDateString);
+            System.out.println(response.getStatus());
+            System.out.println(response.toString());
+            System.out.println(response.getEntity().toString());
+            expect(response.getStatus()).toEqual(200);
+        });
+    });
+    describe("Test Service Method With Bad Parameters", () -> {
+        it("should throw WebApplicationException", () -> {
+            expect(() -> {
+                ComparisonController comparisonController = new ComparisonController();
+                Response response = comparisonController.getPerformance(Arrays.asList("*"), "Bad-Date1", "No-date2");
+            }).toThrow(WebApplicationException.class);
+        });
     });
 
 }}

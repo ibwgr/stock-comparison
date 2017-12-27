@@ -1,18 +1,18 @@
 package ch.ibw.nds.appl2017.service;
 
 import ch.ibw.nds.appl2017.model.ComparisonInput;
-import ch.ibw.nds.appl2017.model.Stock;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/comparison")
 public class ComparisonController {
@@ -27,7 +27,6 @@ public class ComparisonController {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
-
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
@@ -43,15 +42,11 @@ public class ComparisonController {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
-
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
         // todo hier natuerlich comparisonOutput
         return Response.status(200).entity(comparisonInput).build();
     }
-
-
-
 
 }
