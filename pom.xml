@@ -119,7 +119,12 @@
             <version>2.0.2-beta</version>
             <scope>test</scope>
         </dependency>
-
+        <!-- Travis: Unable to create a Configuration, because no Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath. -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.4.Final</version>
+        </dependency>
 
     </dependencies>
     
