@@ -3,7 +3,6 @@ package ch.ibw.nds.appl2017.external;
 import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

@@ -29,19 +29,19 @@ public class AlphaVantage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
 
-    public static final String HTTPS = "https";
-    public static final String HOST_NAME = "www.alphavantage.co";
-    public static final String REST_PATH = "query";
-    public static final String FUNCTION = "function";
-    public static final String TIME_SERIES_DAILY = "TIME_SERIES_DAILY";
-    public static final String SYMBOL = "symbol";
-    public static final String OUTPUTSIZE = "outputsize";
-    public static final String OUTPUTSIZE_FULL = "full";
-    public static final String APIKEY = "apikey";
-    public static final String APIKEY_VALUE = "IC2ZRP67FJJQ79DV";
-    public static final String UTF_8 = "UTF-8";
-    public static final String JSON_TIME_SERIES_DAILY1 = "Time Series (Daily)";
-    public static final String JSON_CLOSE_PRICE = "4. close";
+    private static final String HTTPS = "https";
+    private static final String HOST_NAME = "www.alphavantage.co";
+    private static final String REST_PATH = "query";
+    private static final String FUNCTION = "function";
+    private static final String TIME_SERIES_DAILY = "TIME_SERIES_DAILY";
+    private static final String SYMBOL = "symbol";
+    private static final String OUTPUTSIZE = "outputsize";
+    private static final String OUTPUTSIZE_FULL = "full";
+    private static final String APIKEY = "apikey";
+    private static final String APIKEY_VALUE = "IC2ZRP67FJJQ79DV";
+    private static final String UTF_8 = "UTF-8";
+    private static final String JSON_TIME_SERIES_DAILY1 = "Time Series (Daily)";
+    private static final String JSON_CLOSE_PRICE = "4. close";
 
     private AlphaVantage() {
 
@@ -53,8 +53,28 @@ public class AlphaVantage {
 
     public void getStock(Stock stock, Date dateFrom, Date dateTo) {
         JSONObject jsonObject = callApi(stock.getSymbol());
+        if (isErrorResponse(jsonObject)){
+            return;
+        }
         List<TimeSerie> timeSeries = findTimeSeries(dateFrom, dateTo, jsonObject);
         stock.setTimeSeries(timeSeries);
+    }
+
+    private boolean isErrorResponse(JSONObject jsonObject) {
+        boolean hasErrorMessage = jsonObject.has("Error Message");
+        if (hasErrorMessage) {
+            logErrorMessage(jsonObject);
+            return true;
+        }
+        return false;
+    }
+
+    private void logErrorMessage(JSONObject jsonObject) {
+        try {
+            LOGGER.error("Response Error: {}", jsonObject.getString("Error Message"));
+        } catch (JSONException e) {
+            LOGGER.trace("Parsing Error Message from JSON response failed", e);
+        }
     }
 
     public List<TimeSerie> findTimeSeries(Date dateFrom, Date dateTo, JSONObject jsonObject) {
@@ -71,7 +91,7 @@ public class AlphaVantage {
     }
 
     private JSONObject getJsonTimeSeries(JSONObject jsonObject) {
-        JSONObject jsonTimeSeries = null;
+        JSONObject jsonTimeSeries = new JSONObject();
         try {
             jsonTimeSeries = jsonObject.getJSONObject(JSON_TIME_SERIES_DAILY1);
         } catch (JSONException e) {
@@ -128,8 +148,8 @@ public class AlphaVantage {
     }
 
     private JSONObject getJsonResponse(HttpResponse httpResponse) {
+        JSONObject responseJson = new JSONObject();
         HttpEntity entity = httpResponse.getEntity();
-        JSONObject responseJson = null;
         try {
             String responseString = EntityUtils.toString(entity, UTF_8);
             responseJson = new JSONObject(responseString);
