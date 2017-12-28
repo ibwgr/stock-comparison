@@ -1,6 +1,8 @@
 package ch.ibw.nds.appl2017.service;
 
 import ch.ibw.nds.appl2017.model.ComparisonInput;
+import ch.ibw.nds.appl2017.model.ComparisonOutput;
+import ch.ibw.nds.appl2017.model.ComparisonOutputElement;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 import java.util.List;
 
 @Path("/comparison")
@@ -30,8 +33,14 @@ public class ComparisonController {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
-        // todo hier natuerlich comparisonOutput
-        return Response.status(200).entity(comparisonInput).build();
+        // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
+        ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
+                Arrays.asList(
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                )
+        );
+        return Response.status(200).entity(comparisonOutput).build();
     }
 
     @Path("/performance")
@@ -45,8 +54,14 @@ public class ComparisonController {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
-        // todo hier natuerlich comparisonOutput
-        return Response.status(200).entity(comparisonInput).build();
+        // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
+        ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
+                Arrays.asList(
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                )
+        );
+        return Response.status(200).entity(comparisonOutput).build();
     }
 
 }
