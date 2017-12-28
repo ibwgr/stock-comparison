@@ -84,10 +84,16 @@ public class ValidatorTest {{
                 Validator.validateInput(stockStringList,  fromDateString, null);
             }).toThrow(WebApplicationException.class);
         });
-        it("should throw WebApplicationException because of dangerous input", () -> {
+        it("should throw WebApplicationException because of dangerous input on fromDateString", () -> {
             expect(() -> {
                 ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(stockStringList, "<script type=\"text/javascript\">alert(\"hello!\");</script>", toDateString);
+            }).toThrow(WebApplicationException.class);
+        });
+        it("should throw WebApplicationException because of dangerous input on toDateString", () -> {
+            expect(() -> {
+                ComparisonController comparisonController = new ComparisonController();
+                Validator.validateInput(stockStringList, fromDateString,"<script type=\"text/javascript\">alert(\"hello!\");</script>");
             }).toThrow(WebApplicationException.class);
         });
     });

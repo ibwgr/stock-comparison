@@ -1,13 +1,11 @@
 package ch.ibw.nds.appl2017.service;
 
-import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,29 +19,15 @@ public class ComparisonControllerTest {{
     String stockString1 = "NESN";
     String stockString2 = "GOOGL";
     String stockString3 = "AI";
-
-    List<String> stockStringList = new ArrayList<>();
-    stockStringList.add((stockString1));
-    stockStringList.add((stockString2));
-
+    String stockString4 = "ORCL";
+    List<String> stockStringList = Arrays.asList(stockString1,stockString2,stockString3,stockString4);
     Stock stock1 = Stock.createStock(stockString1);
     Stock stock2 = Stock.createStock(stockString2);
-    List<Stock> stockList = new ArrayList();
-    stockList.add(stock1);
-    stockList.add(stock2);
-
+    Stock stock3 = Stock.createStock(stockString3);
+    Stock stock4 = Stock.createStock(stockString4);
+    List<Stock> stockList = Arrays.asList(stock1,stock2,stock3,stock4);
     String fromDateString = "20170101";
     String toDateString = "20171231";
-
-
-    describe("Test Stock/ComparisonInput Building Methods", () -> {
-        it("should bundle Elements for a ComparisonInput Object", () -> {
-            ComparisonController comparisonController = new ComparisonController();
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
-            expect(comparisonInput.getStocks().size()).toEqual(stockStringList.size());
-            expect(comparisonInput.getStocks().get(0).getSymbol()).toEqual(stockString1);
-        });
-    });
 
     describe("Test Service Method With Good Parameters", () -> {
         it("should return http response code 200 (ok) on getPerformance", () -> {
