@@ -33,13 +33,18 @@ public class ComparisonController {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
-        // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
-        ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
-                Arrays.asList(
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
-                )
-        );
+        ComparisonOutput comparisonOutput = null;
+        try {
+            // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
+            comparisonOutput = ComparisonOutput.createComparisonOutput(
+                    Arrays.asList(
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                    )
+            );
+        } catch (Exception e) {
+            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
+        }
         return Response.status(200).entity(comparisonOutput).build();
     }
 
@@ -54,13 +59,18 @@ public class ComparisonController {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
         // todo call berechnung
-        // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
-        ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
-                Arrays.asList(
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
-                )
-        );
+        ComparisonOutput comparisonOutput = null;
+        try {
+            // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
+            comparisonOutput = ComparisonOutput.createComparisonOutput(
+                    Arrays.asList(
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                    )
+            );
+        } catch (Exception e) {
+            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
+        }
         return Response.status(200).entity(comparisonOutput).build();
     }
 
