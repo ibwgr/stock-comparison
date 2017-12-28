@@ -15,9 +15,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by dieterbiedermann on 18.12.17.
- */
 public class AlphaVantage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
