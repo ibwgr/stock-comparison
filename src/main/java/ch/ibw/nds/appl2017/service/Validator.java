@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Validator {
 
+    private Validator() {
+    }
+
     public static void validateInput(List<String> stockSymbols, String fromDateString, String toDateString) {
         if (fromDateString == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
