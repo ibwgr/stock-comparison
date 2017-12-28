@@ -3,17 +3,10 @@ package ch.ibw.nds.appl2017.external;
 import ch.ibw.nds.appl2017.model.Stock;
 import ch.ibw.nds.appl2017.model.TimeSerie;
 import ch.ibw.nds.appl2017.service.Const;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +21,7 @@ import org.slf4j.LoggerFactory;
 public class AlphaVantage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
+    private static final HttpUtils httpUtils = HttpUtils.create();
 
     private static final String HTTPS = "https";
     private static final String HOST_NAME = "www.alphavantage.co";
@@ -39,7 +33,6 @@ public class AlphaVantage {
     private static final String OUTPUTSIZE_FULL = "full";
     private static final String APIKEY = "apikey";
     private static final String APIKEY_VALUE = "IC2ZRP67FJJQ79DV";
-    private static final String UTF_8 = "UTF-8";
     private static final String JSON_TIME_SERIES_DAILY1 = "Time Series (Daily)";
     private static final String JSON_CLOSE_PRICE = "4. close";
 
@@ -53,6 +46,7 @@ public class AlphaVantage {
 
     public void getStock(Stock stock, Date dateFrom, Date dateTo) {
         JSONObject jsonObject = callApi(stock.getSymbol());
+        LOGGER.info("JSON for symbol {} received", stock.getSymbol());
         if (isErrorResponse(jsonObject)){
             return;
         }
@@ -142,33 +136,7 @@ public class AlphaVantage {
                 .addParameter(OUTPUTSIZE, OUTPUTSIZE_FULL)
                 .addParameter(APIKEY, APIKEY_VALUE);
 
-        HttpUriRequest request = new HttpGet(uriBuilder.toString());
-        HttpResponse httpResponse = getHttpResponse(request);
-        return getJsonResponse(httpResponse);
+        return httpUtils.getJsonFromUriRequest(uriBuilder);
     }
 
-    private JSONObject getJsonResponse(HttpResponse httpResponse) {
-        JSONObject responseJson = new JSONObject();
-        HttpEntity entity = httpResponse.getEntity();
-        try {
-            String responseString = EntityUtils.toString(entity, UTF_8);
-            responseJson = new JSONObject(responseString);
-        } catch (IOException | JSONException e) {
-            LOGGER.trace("Parsing JSON response failed", e);
-        }
-        return responseJson;
-    }
-
-    private HttpResponse getHttpResponse(HttpUriRequest request) {
-        HttpResponse httpResponse = null;
-        try {
-            httpResponse = HttpClientBuilder
-                    .create()
-                    .build()
-                    .execute(request);
-        } catch (IOException e) {
-            LOGGER.trace("Http request failed", e);
-        }
-        return httpResponse;
-    }
 }
