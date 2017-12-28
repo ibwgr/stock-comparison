@@ -63,7 +63,6 @@ public class ComparisonInput {
     }
 
 
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Comparison-Input: ");

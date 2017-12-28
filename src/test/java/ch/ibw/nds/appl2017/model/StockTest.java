@@ -14,7 +14,8 @@ public class StockTest {{
         it("should create a simple stock object", () -> {
            String stockString1 = "NESN";
            Stock stock1 = Stock.createStock(stockString1);
-            expect(stock1.getSymbol()).toEqual(stockString1);
+           System.out.println(stock1);
+           expect(stock1.getSymbol()).toEqual(stockString1);
         });
     });
 

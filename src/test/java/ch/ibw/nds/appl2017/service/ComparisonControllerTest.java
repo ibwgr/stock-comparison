@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.service;
 
-import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.Stock;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
@@ -34,16 +33,6 @@ public class ComparisonControllerTest {{
 
     String fromDateString = "20170101";
     String toDateString = "20171231";
-
-
-    describe("Test Stock/ComparisonInput Building Methods", () -> {
-        it("should bundle Elements for a ComparisonInput Object", () -> {
-            ComparisonController comparisonController = new ComparisonController();
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
-            expect(comparisonInput.getStocks().size()).toEqual(stockStringList.size());
-            expect(comparisonInput.getStocks().get(0).getSymbol()).toEqual(stockString1);
-        });
-    });
 
     describe("Test Service Method With Good Parameters", () -> {
         it("should return http response code 200 (ok) on getPerformance", () -> {
