@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.model;
 
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 public class Stock {
