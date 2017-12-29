@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.model;
 
-import ch.ibw.nds.appl2017.service.ComparisonController;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
@@ -38,7 +37,6 @@ public class ComparisonInputTest {{
 
     describe("Test ComparisonInput Building Methods", () -> {
         it("should bundle Elements for a ComparisonInput Object", () -> {
-            ComparisonController comparisonController = new ComparisonController();
             ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
             System.out.println(comparisonInput);
             expect(comparisonInput.getStocks().size()).toEqual(stockStringList.size());

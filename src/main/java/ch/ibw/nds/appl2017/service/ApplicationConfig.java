@@ -16,6 +16,6 @@ public class ApplicationConfig extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>(Arrays.asList(ComparisonController.class, JacksonFeature.class));
+        return new HashSet<Class<?>>(Arrays.asList(ComparisonService.class, JacksonFeature.class));
     }
 }

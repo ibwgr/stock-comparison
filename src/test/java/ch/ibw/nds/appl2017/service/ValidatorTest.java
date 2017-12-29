@@ -36,23 +36,19 @@ public class ValidatorTest {{
 
     describe("Test Security Methods Positive", () -> {
         it("should successfully validate input with default testdata", () -> {
-            ComparisonController comparisonController = new ComparisonController();
             Validator.validateInput(stockStringList, fromDateString, toDateString);
         });
         it("should successfully validate input with 1 stock", () -> {
-            ComparisonController comparisonController = new ComparisonController();
             List<String> tempStockStringList = new ArrayList<String>(
                     Arrays.asList(stockString1));
             Validator.validateInput(tempStockStringList, fromDateString, toDateString);
         });
         it("should successfully validate input with 2 stock", () -> {
-            ComparisonController comparisonController = new ComparisonController();
             List<String> tempStockStringList = new ArrayList<String>(
                     Arrays.asList(stockString1,stockString2));
             Validator.validateInput(tempStockStringList, fromDateString, toDateString);
         });
         it("should successfully validate input with 3 stock", () -> {
-            ComparisonController comparisonController = new ComparisonController();
             List<String> tempStockStringList = new ArrayList<String>(
                     Arrays.asList(stockString1,stockString2,stockString3));
             Validator.validateInput(tempStockStringList, fromDateString, toDateString);
@@ -62,37 +58,31 @@ public class ValidatorTest {{
     describe("Test Security Methods Negative", () -> {
         it("should throw WebApplicationException because of a too long stock symbol (fromDate ok, toDate ok)", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(Arrays.asList("THISISAVERYLONGSYMBOL"),  fromDateString, toDateString);
             }).toThrow(WebApplicationException.class);
         });
         it("should throw WebApplicationException because of missing stocklist (fromDate ok, toDate ok)", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(null,  fromDateString, toDateString);
             }).toThrow(WebApplicationException.class);
         });
         it("should throw WebApplicationException because of missing fromDate (stocklist ok, toDate ok)", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(stockStringList,  null, toDateString);
             }).toThrow(WebApplicationException.class);
         });
         it("should throw WebApplicationException because of missing toDate (stocklist ok, fromDate ok)", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(stockStringList,  fromDateString, null);
             }).toThrow(WebApplicationException.class);
         });
         it("should throw WebApplicationException because of dangerous input on fromDateString", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(stockStringList, "<script type=\"text/javascript\">alert(\"hello!\");</script>", toDateString);
             }).toThrow(WebApplicationException.class);
         });
         it("should throw WebApplicationException because of dangerous input on toDateString", () -> {
             expect(() -> {
-                ComparisonController comparisonController = new ComparisonController();
                 Validator.validateInput(stockStringList, fromDateString,"<script type=\"text/javascript\">alert(\"hello!\");</script>");
             }).toThrow(WebApplicationException.class);
         });
