@@ -13,7 +13,7 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
 
 @RunWith(OleasterRunner.class)
-public class ComparisonControllerTest {{
+public class ComparisonServiceTest {{
 
     String stockString1 = "NESN";
     String stockString2 = "GOOGL";
