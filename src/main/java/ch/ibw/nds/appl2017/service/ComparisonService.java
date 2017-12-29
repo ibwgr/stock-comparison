@@ -5,8 +5,6 @@ import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import ch.ibw.nds.appl2017.model.ComparisonOutputElement;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,9 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Path("/comparison")
-public class ComparisonController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonController.class);
+public class ComparisonService {
 
     @Path("/correlation")
     @GET
