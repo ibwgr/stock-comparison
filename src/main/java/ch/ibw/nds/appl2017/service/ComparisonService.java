@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Path("/comparison")
-public class ComparisonController {
+public class ComparisonService {
 
     @Path("/correlation")
     @GET
