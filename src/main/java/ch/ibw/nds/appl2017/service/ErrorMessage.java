@@ -2,21 +2,21 @@ package ch.ibw.nds.appl2017.service;
 
 public class ErrorMessage {
 
-    String errorMessage;
+    String message;
 
-    private ErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    private ErrorMessage(String message) {
+        this.message = message;
     }
 
-    public static ErrorMessage createErrorMessage (String errorMessage) {
-        return new ErrorMessage(errorMessage);
+    public static ErrorMessage createErrorMessage (String message) {
+        return new ErrorMessage(message);
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
