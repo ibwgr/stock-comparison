@@ -5,7 +5,6 @@ import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import ch.ibw.nds.appl2017.model.Stock;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class ComparisonTemplate {
@@ -15,9 +14,8 @@ public abstract class ComparisonTemplate {
     }
 
     public ComparisonOutput compare(ComparisonInput comparisonInput) {
-
-
-        return ComparisonOutput.createComparisonOutput(Collections.EMPTY_LIST);
+        List<Stock> stocks = getAllStocks(comparisonInput);
+        return calculate(stocks);
     }
 
     private List<Stock> getAllStocks(ComparisonInput comparisonInput) {

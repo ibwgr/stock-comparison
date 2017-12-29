@@ -35,11 +35,13 @@ public class HttpUtils {
     private JSONObject getJsonFromResponse(HttpResponse httpResponse) {
         JSONObject responseJson = new JSONObject();
         HttpEntity entity = httpResponse.getEntity();
-        try {
-            String responseString = EntityUtils.toString(entity, UTF_8);
-            responseJson = new JSONObject(responseString);
-        } catch (IOException | JSONException e) {
-            LOGGER.trace("Parsing JSON response failed", e);
+        if (entity != null) {
+            try {
+                String responseString = EntityUtils.toString(entity, UTF_8);
+                responseJson = new JSONObject(responseString);
+            } catch (IOException | JSONException e) {
+                LOGGER.trace("Parsing JSON response failed", e);
+            }
         }
         return responseJson;
     }
@@ -47,10 +49,11 @@ public class HttpUtils {
     private HttpResponse getHttpResponse(HttpUriRequest request) {
         DefaultHttpResponseFactory factory = new DefaultHttpResponseFactory();
         HttpResponse httpResponse = factory.newHttpResponse(
-                new BasicStatusLine(HttpVersion.HTTP_1_1,
-                    HttpStatus.SC_OK,
-                        null),
-                null
+                new BasicStatusLine(HttpVersion.HTTP_1_1
+                        ,HttpStatus.SC_OK
+                        ,null
+                )
+                ,null
         );
         try {
             httpResponse = HttpClientBuilder
