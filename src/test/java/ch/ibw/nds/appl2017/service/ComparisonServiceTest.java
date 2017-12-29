@@ -34,7 +34,7 @@ public class ComparisonServiceTest {{
         });
         it("should return http response code 200 (ok) on getCorrelation", () -> {
             ComparisonService comparisonController = new ComparisonService();
-            Response response = comparisonController.getCorrelation(stockSmtringList, fromDateString, toDateString);
+            Response response = comparisonController.getCorrelation(stockStringList, fromDateString, toDateString);
             System.out.println(response.getStatus());
             System.out.println(response.toString());
             System.out.println(response.getEntity().toString());
