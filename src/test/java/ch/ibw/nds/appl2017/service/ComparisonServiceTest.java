@@ -1,9 +1,10 @@
 package ch.ibw.nds.appl2017.service;
 
+import ch.ibw.nds.appl2017.model.ComparisonInput;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
@@ -23,31 +24,46 @@ public class ComparisonServiceTest {{
     String fromDateString = "20170101";
     String toDateString = "20171231";
 
-    describe("Test Service Method With Good Parameters", () -> {
-        it("should return http response code 200 (ok) on getPerformance", () -> {
-            ComparisonService comparisonController = new ComparisonService();
-            Response response = comparisonController.getPerformance(stockStringList, fromDateString, toDateString);
-            System.out.println(response.getStatus());
-            System.out.println(response.toString());
-            System.out.println(response.getEntity().toString());
-            expect(response.getStatus()).toEqual(200);
-        });
-        it("should return http response code 200 (ok) on getCorrelation", () -> {
-            ComparisonService comparisonController = new ComparisonService();
-            Response response = comparisonController.getCorrelation(stockStringList, fromDateString, toDateString);
-            System.out.println(response.getStatus());
-            System.out.println(response.toString());
-            System.out.println(response.getEntity().toString());
-            expect(response.getStatus()).toEqual(200);
-        });
-    });
-    describe("Test Service Method With Bad Parameters", () -> {
+//    describe("Test Service Method With Good Parameters", () -> {
+//        it("should return http response code 200 (ok) on getPerformance", () -> {
+//            ComparisonService comparisonController = new ComparisonService();
+//            Response response = comparisonController.getPerformance(stockStringList, fromDateString, toDateString);
+//            System.out.println(response.getStatus());
+//            System.out.println(response.toString());
+//            System.out.println(response.getEntity().toString());
+//            expect(response.getStatus()).toEqual(200);
+//        });
+//        it("should return http response code 200 (ok) on getCorrelation", () -> {
+//            ComparisonService comparisonController = new ComparisonService();
+//            Response response = comparisonController.getCorrelation(stockStringList, fromDateString, toDateString);
+//            System.out.println(response.getStatus());
+//            System.out.println(response.toString());
+//            System.out.println(response.getEntity().toString());
+//            expect(response.getStatus()).toEqual(200);
+//        });
+//    });
+//    describe("Test Service Method With Bad Parameters", () -> {
+//        it("should throw WebApplicationException", () -> {
+//            expect(() -> {
+//                ComparisonService comparisonController = new ComparisonService();
+//                Response response = comparisonController.getPerformance(Arrays.asList("*"), "Bad-Date1", "No-date2");
+//            }).toThrow(WebApplicationException.class);
+//        });
+//    });
+
+    describe("Test Service with mocked business logic error", () -> {
         it("should throw WebApplicationException", () -> {
-            expect(() -> {
-                ComparisonService comparisonController = new ComparisonService();
-                Response response = comparisonController.getPerformance(Arrays.asList("*"), "Bad-Date1", "No-date2");
-            }).toThrow(WebApplicationException.class);
+            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
+            ComparisonService comparisonController = new ComparisonService();
+            ComparisonService spiedComparisonService = Mockito.spy(comparisonController);
+            //Mockito.doThrow(RuntimeException.class).when(spiedComparisonService.runCalculationAndCreateOutput(comparisonInput));
+            //https://examples.javacodegeeks.com/core-java/mockito/mockito-spy-example/
+            Mockito.when(spiedComparisonService.runCalculationAndCreateOutput(comparisonInput))
+                        .thenThrow(new RuntimeException());
+            Response response = spiedComparisonService.getPerformance(stockStringList, fromDateString, toDateString);
+            expect(response.getStatus()).toEqual(502);
         });
     });
+
 
 }}
