@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.controller;
 
-import ch.ibw.nds.appl2017.external.AlphaVantage;
 import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import ch.ibw.nds.appl2017.model.ComparisonOutputElement;
 import ch.ibw.nds.appl2017.model.Stock;
