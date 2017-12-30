@@ -140,6 +140,30 @@ public class CorrelationTest {{
         });
     });
 
+    describe("getCorrelation", () -> {
+        it("should return the correlation 1.0", () -> {
+            Correlation correlation = Correlation.create();
+
+            double[] x = {1d,2d};
+            double[] y = {2d,3d};
+
+            double result = correlation.getCorrelation(x,y);
+
+            expect(result).toEqual(1.0d);
+        });
+
+        it("should return the correlation -1.0", () -> {
+            Correlation correlation = Correlation.create();
+
+            double[] x = {1d,2d};
+            double[] y = {3d,2d};
+
+            double result = correlation.getCorrelation(x,y);
+
+            expect(result).toEqual(-1.0d);
+        });
+    });
+
     describe("getClosePrices", () -> {
         it("should return the close price as an array", () -> {
             Stock stock = Stock.createStock("MSFT");

@@ -41,6 +41,12 @@ public class Correlation extends ComparisonTemplate {
     }
 
     public void addCorrelationElement(Stock stockX, double[] x, Stock stockY, double[] y) {
+        double corr = getCorrelation(x, y);
+        LOGGER.info("Symbol {} and {} have a correlation of {}", stockX.getSymbol(), stockY.getSymbol(), corr);
+        comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stockX, stockY, corr));
+    }
+
+    public double getCorrelation(double[] x, double[] y) {
         double corr = 0d;
         if (x.length > 1 && y.length > 1) {
             corr = new PearsonsCorrelation().correlation(x, y);
@@ -48,8 +54,7 @@ public class Correlation extends ComparisonTemplate {
                 corr = 0d;
             }
         }
-        LOGGER.info("Symbol {} and {} have a correlation of {}", stockX.getSymbol(), stockY.getSymbol(), corr);
-        comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stockX, stockY, corr));
+        return corr;
     }
 
     public double[] getClosePrices(Stock stock) {
