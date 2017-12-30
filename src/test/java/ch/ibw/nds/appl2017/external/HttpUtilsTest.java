@@ -27,9 +27,7 @@ public class HttpUtilsTest {{
 
             JSONObject result = httpUtils.getJsonFromUriRequest(uriBuilder);
 
-            System.out.println(result.toString());
-
-            expect(result).toBeNotNull();
+            expect(result.getString("Time Series (Daily)")).toBeNotNull();
         });
     });
 
