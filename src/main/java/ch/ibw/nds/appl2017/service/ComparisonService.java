@@ -29,18 +29,18 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        ComparisonOutput comparisonOutput;
-        try {
-            comparisonOutput = getComparisonCorrelationOutput(comparisonInput);
-        } catch (Exception e) {
-            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
-        }
-        return Response.status(200).entity(comparisonOutput).build();
+        Response response = getComparisonCorrelationOutputResponse(comparisonInput);
+        return response;
     }
 
-    public ComparisonOutput getComparisonCorrelationOutput(ComparisonInput comparisonInput) {
-        Correlation correlation = Correlation.create();
-        return correlation.compare(comparisonInput);
+    public Response getComparisonCorrelationOutputResponse(ComparisonInput comparisonInput) {
+        try {
+            Correlation correlation = Correlation.create();
+            ComparisonOutput comparisonOutput = correlation.compare(comparisonInput);
+            return Response.status(200).entity(comparisonOutput).build();
+        } catch (Exception e) {
+            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal-error")).build();
+        }
     }
 
 
@@ -54,25 +54,24 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        ComparisonOutput comparisonOutput;
-        try {
-            comparisonOutput = getComparisonPerformanceOutput(comparisonInput);
-        } catch (Exception e) {
-            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
-        }
-        return Response.status(200).entity(comparisonOutput).build();
+        Response response = getComparisonPerformanceOutputResponse(comparisonInput);
+        return response;
     }
 
-    public ComparisonOutput getComparisonPerformanceOutput(ComparisonInput comparisonInput) {
-        // todo call berechnung
-        // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
-        ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
-                Arrays.asList(
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
-                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
-                )
-        );
-        return comparisonOutput;
+    public Response getComparisonPerformanceOutputResponse(ComparisonInput comparisonInput) {
+        try {
+            // todo call berechnung
+            // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
+            ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
+                    Arrays.asList(
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                    )
+            );
+            return Response.status(200).entity(comparisonOutput).build();
+        } catch (Exception e) {
+            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal-error")).build();
+        }
     }
 
 }

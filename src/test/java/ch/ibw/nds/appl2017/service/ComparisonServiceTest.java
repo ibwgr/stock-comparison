@@ -59,7 +59,7 @@ public class ComparisonServiceTest {{
             ComparisonService spiedComparisonService = Mockito.spy(comparisonController);
             //Mockito.doThrow(RuntimeException.class).when(spiedComparisonService.runCalculationAndCreateOutput(comparisonInput));
             //https://examples.javacodegeeks.com/core-java/mockito/mockito-spy-example/
-            Mockito.when(spiedComparisonService.getComparisonPerformanceOutput(comparisonInput))
+            Mockito.when(spiedComparisonService.getComparisonPerformanceOutputResponse(comparisonInput))
                         .thenThrow(new RuntimeException());
             Response response = spiedComparisonService.getPerformance(stockStringList, fromDateString, toDateString);
             // todo mocking funktioniert so nicht richtig
