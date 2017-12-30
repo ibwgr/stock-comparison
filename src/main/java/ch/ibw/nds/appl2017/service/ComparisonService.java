@@ -29,22 +29,20 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        // todo call berechnung
-        Correlation correlation = Correlation.create();
-        ComparisonOutput comparisonOutput = correlation.compare(comparisonInput);
-//        try {
-//            // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
-//            comparisonOutput = ComparisonOutput.createComparisonOutput(
-//                    Arrays.asList(
-//                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
-//                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
-//                    )
-//            );
-//        } catch (Exception e) {
-//            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
-//        }
+        ComparisonOutput comparisonOutput;
+        try {
+            comparisonOutput = getComparisonCorrelationOutput(comparisonInput);
+        } catch (Exception e) {
+            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
+        }
         return Response.status(200).entity(comparisonOutput).build();
     }
+
+    public ComparisonOutput getComparisonCorrelationOutput(ComparisonInput comparisonInput) {
+        Correlation correlation = Correlation.create();
+        return correlation.compare(comparisonInput);
+    }
+
 
     @Path("/performance")
     @GET
@@ -56,25 +54,24 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        ComparisonOutput comparisonOutput = null;
+        ComparisonOutput comparisonOutput;
         try {
-            comparisonOutput = runCalculationAndCreateOutput(comparisonInput);
+            comparisonOutput = getComparisonPerformanceOutput(comparisonInput);
         } catch (Exception e) {
             return Response.status(502).entity(ErrorMessage.createErrorMessage("internal error")).build();
         }
         return Response.status(200).entity(comparisonOutput).build();
     }
 
-
-    ComparisonOutput runCalculationAndCreateOutput(ComparisonInput comparisonInput){
+    public ComparisonOutput getComparisonPerformanceOutput(ComparisonInput comparisonInput) {
         // todo call berechnung
         // todo das hier ist nur zu Testzwecken (Annahme dass 4 Stocksymbole uebergeben werden)
         ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
-                    Arrays.asList(
-                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
-                            ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
-                    )
-            );
+                Arrays.asList(
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(0), comparisonInput.getStocks().get(1),2.15) ,
+                        ComparisonOutputElement.createComparisonOutputElement(comparisonInput.getStocks().get(2), comparisonInput.getStocks().get(3),1.07)
+                )
+        );
         return comparisonOutput;
     }
 
