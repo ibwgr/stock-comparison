@@ -6,9 +6,6 @@ import ch.ibw.nds.appl2017.model.Stock;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by dieterbiedermann on 18.12.17.
- */
 public class  StockData {
 
     private AlphaVantage alphaVantage = AlphaVantage.create();
