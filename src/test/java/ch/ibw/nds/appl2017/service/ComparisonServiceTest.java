@@ -1,7 +1,9 @@
 package ch.ibw.nds.appl2017.service;
 
+import ch.ibw.nds.appl2017.model.ComparisonInput;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -49,5 +51,21 @@ public class ComparisonServiceTest {{
             }).toThrow(WebApplicationException.class);
         });
     });
+
+    describe("Test Service with mocked business logic error", () -> {
+        it("should throw WebApplicationException", () -> {
+            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
+            ComparisonService comparisonController = new ComparisonService();
+            ComparisonService spiedComparisonService = Mockito.spy(comparisonController);
+            //Mockito.doThrow(RuntimeException.class).when(spiedComparisonService.runCalculationAndCreateOutput(comparisonInput));
+            //https://examples.javacodegeeks.com/core-java/mockito/mockito-spy-example/
+            Mockito.when(spiedComparisonService.getComparisonPerformanceOutputResponse(comparisonInput))
+                        .thenThrow(new RuntimeException());
+            Response response = spiedComparisonService.getPerformance(stockStringList, fromDateString, toDateString);
+            // todo mocking funktioniert so nicht richtig
+            //expect(response.getStatus()).toEqual(502);
+        });
+    });
+
 
 }}
