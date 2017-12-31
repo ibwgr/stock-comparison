@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.controller;
 
-import ch.ibw.nds.appl2017.external.AlphaVantage;
 import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import ch.ibw.nds.appl2017.model.ComparisonOutputElement;
 import ch.ibw.nds.appl2017.model.Stock;
@@ -15,6 +14,7 @@ import java.util.List;
 public class Correlation extends ComparisonTemplate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Correlation.class);
+    List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
 
     private Correlation() {
     }
@@ -26,33 +26,42 @@ public class Correlation extends ComparisonTemplate {
     @Override
     public ComparisonOutput calculate(List<Stock> stocks) {
         super.calculate(stocks);
-        List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
+        comparisonOutputElements = new ArrayList<>();
+
         for (int i = 0; i < stocks.size()-1; i++) {
             if (stocks.get(i).getTimeSeries() != null) {
-                double[] x = stocks.get(i)
-                        .getTimeSeries().stream()
-                        .map(TimeSerie::getClosePrice)
-                        .mapToDouble(Double::doubleValue).toArray();
+                double[] x = getClosePrices(stocks.get(i));
                 for (int j = i+1; j < stocks.size(); j++) {
-                    double[] y = stocks.get(j)
-                            .getTimeSeries().stream()
-                            .map(TimeSerie::getClosePrice)
-                            .mapToDouble(Double::doubleValue)
-                            .toArray();
-                    double corr = 0d;
-                    if (x.length > 1 && y.length > 1) {
-                        corr = new PearsonsCorrelation().correlation(x, y);
-                        if (((Double) corr).isNaN()) {
-                            corr = 0d;
-                        }
-                    }
-                    LOGGER.info("Symbol {} and {} have a correlation of {}", stocks.get(i).getSymbol(), stocks.get(j).getSymbol(), corr);
-                    comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stocks.get(i), stocks.get(j), corr));
+                    double[] y = getClosePrices(stocks.get(j));
+                    addCorrelationElement(stocks.get(i), x, stocks.get(j), y);
                 }
             }
         }
         return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
     }
 
+    public void addCorrelationElement(Stock stockX, double[] x, Stock stockY, double[] y) {
+        double corr = getCorrelation(x, y);
+        LOGGER.info("Symbol {} and {} have a correlation of {}", stockX.getSymbol(), stockY.getSymbol(), corr);
+        comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stockX, stockY, corr));
+    }
+
+    public double getCorrelation(double[] x, double[] y) {
+        double corr = 0d;
+        if (x.length > 1 && y.length > 1) {
+            corr = new PearsonsCorrelation().correlation(x, y);
+            if (((Double) corr).isNaN()) {
+                corr = 0d;
+            }
+        }
+        return corr;
+    }
+
+    public double[] getClosePrices(Stock stock) {
+        return stock
+                .getTimeSeries().stream()
+                .map(TimeSerie::getClosePrice)
+                .mapToDouble(Double::doubleValue).toArray();
+    }
 
 }

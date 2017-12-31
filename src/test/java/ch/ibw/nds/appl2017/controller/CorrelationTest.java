@@ -114,4 +114,69 @@ public class CorrelationTest {{
         });
     });
 
+    describe("addCorrelationElement", () -> {
+        it("should calculate correlation and add the element", () -> {
+            List<Stock> stocks = new ArrayList<>();
+            Stock stock1 = Stock.createStock("MSFT");
+            stock1.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
+                    TimeSerie.create(25d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
+            ));
+
+            Stock stock2 = Stock.createStock("COKE");
+            stock2.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
+                    TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
+            ));
+
+            double[] x = {23d,25d};
+            double[] y = {29d,30d};
+
+            Correlation correlation = Correlation.create();
+            correlation.addCorrelationElement(stock1, x, stock2, y);
+
+            expect(correlation.comparisonOutputElements.size()).toEqual(1);
+            expect(correlation.comparisonOutputElements.get(0).getResultValue()).toEqual(1.0d);
+        });
+    });
+
+    describe("getCorrelation", () -> {
+        it("should return the correlation 1.0", () -> {
+            Correlation correlation = Correlation.create();
+
+            double[] x = {1d,2d};
+            double[] y = {2d,3d};
+
+            double result = correlation.getCorrelation(x,y);
+
+            expect(result).toEqual(1.0d);
+        });
+
+        it("should return the correlation -1.0", () -> {
+            Correlation correlation = Correlation.create();
+
+            double[] x = {1d,2d};
+            double[] y = {3d,2d};
+
+            double result = correlation.getCorrelation(x,y);
+
+            expect(result).toEqual(-1.0d);
+        });
+    });
+
+    describe("getClosePrices", () -> {
+        it("should return the close price as an array", () -> {
+            Stock stock = Stock.createStock("MSFT");
+            stock.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
+            ));
+
+            Correlation correlation = Correlation.create();
+            double[] result = correlation.getClosePrices(stock);
+
+            expect(result.length).toEqual(1);
+            expect(result[0]).toEqual(23d);
+        });
+    });
+
 }}
