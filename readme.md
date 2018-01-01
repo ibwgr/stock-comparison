@@ -10,7 +10,7 @@
 
 
 Test URL:
-* http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
-* http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=NESN&stock=GOOGL&stock=ORCL&stock=LISN&dateFrom=20130313&dateTo=20171231
+* http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
+* http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
 
