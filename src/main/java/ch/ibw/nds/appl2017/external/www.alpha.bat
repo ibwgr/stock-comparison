@@ -1,0 +1,1 @@
+keytool -import -v -file H:\DATEN\IntelliJ-Play\stock-comparison\src\main\java\ch\ibw\nds\appl2017\external\www.alphavantage.co.crt -keystore H:\DATEN\IntelliJ-Play\stock-comparison\src\main\java\ch\ibw\nds\appl2017\external\www.alphavantage.ibw.jks -storepass drowssap

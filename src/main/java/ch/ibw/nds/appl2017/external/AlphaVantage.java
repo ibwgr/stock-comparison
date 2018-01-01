@@ -6,14 +6,14 @@ import ch.ibw.nds.appl2017.service.Const;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AlphaVantage {
 
@@ -27,7 +27,7 @@ public class AlphaVantage {
     private static final String TIME_SERIES_DAILY = "TIME_SERIES_DAILY";
     private static final String SYMBOL = "symbol";
     private static final String OUTPUTSIZE = "outputsize";
-    private static final String OUTPUTSIZE_FULL = "full";
+    private static final String OUTPUTSIZE_FULL = "compact";
     private static final String APIKEY = "apikey";
     private static final String APIKEY_VALUE = "IC2ZRP67FJJQ79DV";
     private static final String JSON_TIME_SERIES_DAILY1 = "Time Series (Daily)";
