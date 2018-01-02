@@ -20,9 +20,9 @@ public class AlphaVantage {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
     private static final HttpUtils httpUtils = HttpUtils.create();
 
-    private static final String HTTPS = "https";
-    private static final String HOST_NAME = "www.alphavantage.co";
-    private static final String REST_PATH = "query";
+    private static final String HTTPS = "http";
+    private static final String HOST_NAME = "www.shuntcondition.com/stock/";
+    private static final String REST_PATH = "query.php";
     private static final String FUNCTION = "function";
     private static final String TIME_SERIES_DAILY = "TIME_SERIES_DAILY";
     private static final String SYMBOL = "symbol";
