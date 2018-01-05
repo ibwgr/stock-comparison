@@ -63,7 +63,7 @@ public class CorrelationTest {{
             expect(comparisonOutput.getComparisonOutputElements().get(0).getResultValue()).toEqual(0d);
         });
 
-        it("should calculate correlation for 4 stocks", () -> {
+        it("should calculate correlation for 4 stocks in correct order", () -> {
             List<Stock> stocks = new ArrayList<>();
             Stock stock1 = Stock.createStock("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
@@ -105,12 +105,12 @@ public class CorrelationTest {{
             ComparisonOutput comparisonOutput = correlation.calculate(stocks);
 
             expect(comparisonOutput.getComparisonOutputElements().size()).toEqual(6);
-            expect(comparisonOutput.getComparisonOutputElements().get(0).getResultValue()).toEqual(-0.9525793444156802d);
-            expect(comparisonOutput.getComparisonOutputElements().get(1).getResultValue()).toEqual(0.39056673294247146d);
-            expect(comparisonOutput.getComparisonOutputElements().get(2).getResultValue()).toEqual(-0.6666666666666665d);
+            expect(comparisonOutput.getComparisonOutputElements().get(0).getResultValue()).toEqual(0.4082482904638627d);
+            expect(comparisonOutput.getComparisonOutputElements().get(1).getResultValue()).toEqual(0.3905667329424721d);
+            expect(comparisonOutput.getComparisonOutputElements().get(2).getResultValue()).toEqual(0.39056673294247146d);
             expect(comparisonOutput.getComparisonOutputElements().get(3).getResultValue()).toEqual(-0.6377928041432805d);
-            expect(comparisonOutput.getComparisonOutputElements().get(4).getResultValue()).toEqual(0.4082482904638627d);
-            expect(comparisonOutput.getComparisonOutputElements().get(5).getResultValue()).toEqual(0.3905667329424721d);
+            expect(comparisonOutput.getComparisonOutputElements().get(4).getResultValue()).toEqual(-0.6666666666666665d);
+            expect(comparisonOutput.getComparisonOutputElements().get(5).getResultValue()).toEqual(-0.9525793444156802d);
         });
     });
 
