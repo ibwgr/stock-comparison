@@ -23,7 +23,7 @@ public class ComparisonOutputTest {{
             );
             System.out.println(comparisonOutput);
             expect(comparisonOutput.getComparisonOutputElements().size()).toEqual(3);
-            expect(comparisonOutput.getComparisonOutputElements().get(0).getStock().getSymbol()).toEqual("NESN");
+            expect(comparisonOutput.getComparisonOutputElements().get(0).getStockSymbol()).toEqual("NESN");
         });
         it("should create a comparison ouput object containing two stocks on each output-element", () -> {
             ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
@@ -35,8 +35,8 @@ public class ComparisonOutputTest {{
             );
             System.out.println(comparisonOutput);
             expect(comparisonOutput.getComparisonOutputElements().size()).toEqual(3);
-            expect(comparisonOutput.getComparisonOutputElements().get(0).getStock().getSymbol()).toEqual("NESN");
-            expect(comparisonOutput.getComparisonOutputElements().get(0).getStock2().getSymbol()).toEqual("GOOGL");
+            expect(comparisonOutput.getComparisonOutputElements().get(0).getStockSymbol()).toEqual("NESN");
+            expect(comparisonOutput.getComparisonOutputElements().get(0).getStockSymbol2()).toEqual("GOOGL");
         });
     });
 

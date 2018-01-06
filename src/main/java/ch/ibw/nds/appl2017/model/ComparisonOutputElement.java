@@ -7,49 +7,49 @@ public class ComparisonOutputElement {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonOutputElement.class);
 
-    private Stock stock;
-    private Stock stock2;
+    private String stockSymbol;
+    private String stockSymbol2;
     private Double resultValue;
 
-    private ComparisonOutputElement(Stock stock, Stock stock2, Double resultValue) {
-        this.stock = stock;
-        this.stock2 = stock2;
+    private ComparisonOutputElement(String stockSymbol, String stockSymbol2, Double resultValue) {
+        this.stockSymbol = stockSymbol;
+        this.stockSymbol2 = stockSymbol2;
         this.resultValue = resultValue;
         LOGGER.debug(this.toString());
     }
 
     public static ComparisonOutputElement createComparisonOutputElement(Stock stock, Double resultValue) {
-        return new ComparisonOutputElement(stock, null, resultValue);
+        return new ComparisonOutputElement(stock.getSymbol(), null, resultValue);
     }
 
     public static ComparisonOutputElement createComparisonOutputElement(Stock stock, Stock stock2, Double resultValue) {
-        return new ComparisonOutputElement(stock, stock2, resultValue);
+        return new ComparisonOutputElement(stock.getSymbol(), stock2.getSymbol(), resultValue);
     }
 
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Comparison-Output Element: ");
-        stringBuilder.append(this.stock);
+        stringBuilder.append(this.stockSymbol);
         stringBuilder.append(": ");
         stringBuilder.append(this.resultValue);
         return stringBuilder.toString();
     }
 
-    public Stock getStock() {
-        return stock;
+    public String getStockSymbol() {
+        return stockSymbol;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setStockSymbol(String stockSymbol) {
+        this.stockSymbol = stockSymbol;
     }
 
-    public Stock getStock2() {
-        return stock2;
+    public String getStockSymbol2() {
+        return stockSymbol2;
     }
 
-    public void setStock2(Stock stock2) {
-        this.stock2 = stock2;
+    public void setStockSymbol2(String stockSymbol2) {
+        this.stockSymbol2 = stockSymbol2;
     }
 
     public Double getResultValue() {

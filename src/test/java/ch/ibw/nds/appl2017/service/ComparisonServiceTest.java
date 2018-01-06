@@ -17,7 +17,7 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
 @RunWith(OleasterRunner.class)
 public class ComparisonServiceTest {{
 
-    String stockString1 = "NESN";
+    String stockString1 = "COKE";
     String stockString2 = "GOOGL";
     String stockString3 = "AI";
     String stockString4 = "ORCL";
