@@ -1,0 +1,9 @@
+version: '2'
+services:
+  web:
+    image: tomcat
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/stock-comparison-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
+      - ./target/stock-comparison-1.0-SNAPSHOT:/usr/local/tomcat/webapps/ROOT
