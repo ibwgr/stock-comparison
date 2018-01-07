@@ -1,0 +1,6 @@
+FROM java:8
+ADD /home/rk/IntelliJ-Projekte/stock-comparison/target/stock-comparison-1.0-SNAPSHOT.war /stock-comparison-1.0-SNAPSHOT.war
+ENTRYPOINT ["java", "-cp", "/stock-comparison-1.0-SNAPSHOT.war", "ch.ibw.nds.appl2017.service.ApplicationConfig"]
+EXPOSE 9999
+CMD []
+
