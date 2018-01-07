@@ -135,8 +135,8 @@ public class CorrelationTest {{
             Correlation correlation = Correlation.create();
             correlation.addCorrelationElement(stock1, x, stock2, y);
 
-            expect(correlation.comparisonOutputElements.size()).toEqual(1);
-            expect(correlation.comparisonOutputElements.get(0).getResultValue()).toEqual(1.0d);
+            expect(correlation.getComparisonOutputElements().size()).toEqual(1);
+            expect(correlation.getComparisonOutputElements().get(0).getResultValue()).toEqual(1.0d);
         });
     });
 

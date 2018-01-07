@@ -15,7 +15,7 @@ import java.util.List;
 public class Correlation extends ComparisonTemplate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Correlation.class);
-    List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
+    private List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
 
     private Correlation() {
     }
@@ -26,7 +26,6 @@ public class Correlation extends ComparisonTemplate {
 
     @Override
     public ComparisonOutput calculate(List<Stock> stocks) {
-        super.calculate(stocks);
         comparisonOutputElements = new ArrayList<>();
 
         for (int i = 0; i < stocks.size()-1; i++) {
@@ -66,4 +65,7 @@ public class Correlation extends ComparisonTemplate {
                 .mapToDouble(Double::doubleValue).toArray();
     }
 
+    public List<ComparisonOutputElement> getComparisonOutputElements() {
+        return comparisonOutputElements;
+    }
 }
