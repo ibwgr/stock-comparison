@@ -56,10 +56,6 @@ public class HttpUtils {
                 ,null
         );
         try {
-
-         // System.setProperty("javax.net.debug", "ssl");
-         // System.setProperty("javax.net.ssl.trustStore", "H:\\DATEN\\IntelliJ-Play\\stock-comparison\\src\\main\\java\\ch\\ibw\\nds\\appl2017\\external\\www.alphavantage.ibw.jks");
-
             httpResponse = HttpClientBuilder
                     .create()
                     .build()
