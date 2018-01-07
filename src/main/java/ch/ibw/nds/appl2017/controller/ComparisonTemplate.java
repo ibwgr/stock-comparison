@@ -23,8 +23,6 @@ public abstract class ComparisonTemplate {
         return stockData.getAllStocks(comparisonInput);
     }
 
-    public ComparisonOutput calculate(List<Stock> stocks) {
-        return null;
-    }
+    public abstract ComparisonOutput calculate(List<Stock> stocks);
 
 }

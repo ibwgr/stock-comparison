@@ -118,7 +118,6 @@ public class AlphaVantage {
         Date dateFromMinus1 = DateUtils.asDate(DateUtils.asLocalDate(dateFrom).minusDays(1));
         Date dateToPlus1 = DateUtils.asDate(DateUtils.asLocalDate(dateTo).plusDays(1));
         if (closeDate.after(dateFromMinus1) && closeDate.before(dateToPlus1)) {
-            LOGGER.info("Add TimeSeries with date {} and price {}", closeDate, closePrice);
             timeSeries.add(TimeSerie.create(closePrice, closeDate));
         }
     }

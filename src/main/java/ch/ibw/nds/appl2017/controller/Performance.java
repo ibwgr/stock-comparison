@@ -12,7 +12,7 @@ import java.util.*;
 public class Performance extends ComparisonTemplate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Performance.class);
-    List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
+    private List<ComparisonOutputElement> comparisonOutputElements = new ArrayList<>();
 
     private Performance() {
 
@@ -30,9 +30,11 @@ public class Performance extends ComparisonTemplate {
         return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
     }
 
-    private void addPerformanceElement(Stock stock) {
-        Optional<TimeSerie> timeSerie1 = stock.getTimeSeries().stream().reduce((a, b) -> a.getCloseDate().before(b.getCloseDate()) ? a : b);
-        Optional<TimeSerie> timeSerie2 = stock.getTimeSeries().stream().reduce((a, b) -> a.getCloseDate().after(b.getCloseDate()) ? a : b);
+    public void addPerformanceElement(Stock stock) {
+        Optional<TimeSerie> timeSerie1 = stock.getTimeSeries().stream()
+                .reduce((a, b) -> a.getCloseDate().before(b.getCloseDate()) ? a : b);
+        Optional<TimeSerie> timeSerie2 = stock.getTimeSeries().stream()
+                .reduce((a, b) -> a.getCloseDate().after(b.getCloseDate()) ? a : b);
         Double perf = getPerformance(timeSerie1, timeSerie2);
         LOGGER.info("Symbol {} has a performance of {}", stock.getSymbol(), perf);
         comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stock, perf));
@@ -55,4 +57,7 @@ public class Performance extends ComparisonTemplate {
         return (price2 - price1) / price1 * 100;
     }
 
+    public List<ComparisonOutputElement> getComparisonOutputElements() {
+        return comparisonOutputElements;
+    }
 }

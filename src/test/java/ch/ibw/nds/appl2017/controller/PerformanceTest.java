@@ -105,6 +105,22 @@ public class PerformanceTest {{
         });
     });
 
+    describe("addPerformanceElement", () -> {
+        it("should calculate performance and add the element", () -> {
+            Stock stock1 = Stock.createStock("MSFT");
+            stock1.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(20d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
+                    TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
+            ));
+
+            Performance performance = Performance.create();
+            performance.addPerformanceElement(stock1);
+
+            expect(performance.getComparisonOutputElements().size()).toEqual(1);
+            expect(performance.getComparisonOutputElements().get(0).getResultValue()).toEqual(50d);
+        });
+    });
+
     describe("calculate", () -> {
         it("should return the ComparisonOutput for 1 stock with 2 timeSeries", () -> {
             List<Stock> stocks = new ArrayList<>();
