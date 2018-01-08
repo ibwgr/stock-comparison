@@ -19,5 +19,5 @@ def check_url( url, timeout=5 ):
         raise Exception('API Integration Test Failed (General Exception)')
 
 print "Running API Integration Tests"
-print check_url("http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231")
-print check_url("http://localhost:8080/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231")
+print check_url("http://127.0.0.1:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231")
+print check_url("http://127.0.0.1:8080/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231")
