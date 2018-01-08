@@ -6,15 +6,12 @@ def check_url( url, timeout=5 ):
     try:
         return urllib2.urlopen(url,timeout=timeout).getcode() == 200
     except urllib2.URLError as e:
-        print e.__doc__
-        print e.message
+          print e.message
         raise Exception('API Integration Test Failed (URLError)')
     except socket.timeout as e:
-        print e.__doc__
         print e.message
         raise Exception('API Integration Test Failed (Socket Timeout)')
     except Exception as e:
-        print e.__doc__
         print e.message
         raise Exception('API Integration Test Failed (General Exception)')
 
