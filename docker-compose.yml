@@ -3,7 +3,7 @@ services:
   web:
     image: tomcat
     ports:
-      - "8080:8080"
+      - "8080:80"
     container_name: stockcomparison_api_container
     volumes:
       - ./target/stock-comparison-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
