@@ -1,8 +1,8 @@
 language: java
 jdk:
 - oraclejdk8
-#services:
-#- docker
+services:
+- docker
 addons:
   sonarcloud:
     organization: reto7-github
@@ -11,11 +11,11 @@ addons:
     - master
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
-#- docker-compose up
-#- docker ps
-#- python integrationtests.py
-#- docker-compose down
-#- docker ps
+- docker-compose up -d
+- docker ps
+- bash integrationtests.sh
+- docker-compose down
+- docker ps
 notifications:
   email:
     on_success: never
