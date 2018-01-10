@@ -1,10 +1,14 @@
 #!/bin/sh
 # Make sure tests fails if a command ends without 0
-#set -e
+set -e
 sleep 3
-echo "--------------------------------------------------------"
-echo "   Running Docker Deployed End-To-End-Tests  "
-echo "--------------------------------------------------------"
+echo "Running Docker Deployed End-To-End Tests on Travis"
+echo "___________           .___          __                   ___________           .___"
+echo "\_   _____/ ____    __| _/        _/  |_  ____           \_   _____/ ____    __| _/"
+echo " |    __)_ /    \  / __ |  ______ \   __\/  _ \   ______  |    __)_ /    \  / __ | "
+echo " |        \   |  \/ /_/ | /_____/  |  | (  <_> ) /_____/  |        \   |  \/ /_/ |"
+echo "/_______  /___|  /\____ |          |__|  \____/          /_______  /___|  /\____ |"
+echo "        \/     \/      \/                                        \/     \/      \/"
 echo "calling http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231"
 actualResponse1=$(curl 'http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231')
 if [[ ${actualResponse1} == *"comparisonOutputElements"* ]]; then

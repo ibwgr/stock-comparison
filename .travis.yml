@@ -10,7 +10,7 @@ addons:
     branches:
     - master
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -DskipTests
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 - docker-compose up -d
 - docker ps
 - bash integrationtests.sh
