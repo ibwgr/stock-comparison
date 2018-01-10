@@ -14,7 +14,6 @@ script:
 - docker-compose up -d
 - docker ps
 - bash integrationtests.sh
-- python integrationtests.py
 - docker-compose down
 - docker ps
 notifications:

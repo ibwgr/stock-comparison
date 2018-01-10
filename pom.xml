@@ -55,51 +55,33 @@
         </dependency>
         <!-- loest: MessageBodyWriter not found for media type=application/json
         And then register the JacksonFeature in your Application/ResourceConfig subclass...
-         how to register the JacksonFeature: https://stackoverflow.com/questions/18317927/force-glassfish4-to-use-jackson-instead-of-moxy#18318314   -->
+         how to register the JacksonFeature: https://stackoverflow.com/questions/18317927/force-glassfish4-to-use-jackson-instead-of-moxy#18318314
+         loest Problem:
+            Der 1. Service Aufruf ergibt auf Linux Systemen immer ein Fehler, alle weiteren Aufrufe funktionieren dann problemlos. Auf Windows Systemen ist dieser Fehler nicht festzustellen.
+            Fehlermeldung: java.lang.ClassNotFoundException: com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector not found by com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider
+            Root Cause java.lang.ClassNotFoundException: com.fasterxml.jackson.annotation.JsonInclude$Value
+            -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey.version}</version>
-            <!--
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.module</groupId>
-                    <artifactId>jackson-module-jaxb-annotations</artifactId>
-                </exclusion>
-            </exclusions>
-            -->
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.7.4</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.7.4</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.7.4</version>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        -->
         <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
