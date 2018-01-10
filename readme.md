@@ -8,8 +8,18 @@
 | <a href="https://travis-ci.org/ibwgr/stock-comparison" target="_blank"><img src="https://travis-ci.org/ibwgr/stock-comparison.svg?branch=master"/></a> | <a href="https://sonarcloud.io/dashboard?id=groupId%3Astock-comparison" target="_blank"><img src="https://sonarcloud.io/api/badges/gate?key=groupId:stock-comparison"/></a> |
 
 
+###Schritte zum Start der Anwendung:
 
-Test URL:
+1.) mvn package
+
+2.) docker-compose up
+
+3.) folgende Beispiel URL's können im Browser aufgerufen werden:
+* http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
+* http://localhost:8080/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
+
+
+Zur Info: Wenn lokal ein Server wie Glassfish oder Tomcat verwendet wird, dann sind dir URL's wiefolgt aufzurufen:
 * http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 * http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
