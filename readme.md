@@ -23,4 +23,8 @@ Zur Info: Wenn lokal ein Server wie Glassfish oder Tomcat verwendet wird, dann s
 * http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 * http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
+Zur Info: Der 1. Service Aufruf ergibt auf Linux Systemen immer ein Fehler, alle weiteren Aufrufe funktionieren dann problemlos. Auf Windows Systemen ist dieser Fehler nicht festzustellen. 
+Fehlermeldung: java.lang.ClassNotFoundException: com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector not found by com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider
+Root Cause java.lang.ClassNotFoundException: com.fasterxml.jackson.annotation.JsonInclude$Value 
+
 
