@@ -8,20 +8,12 @@ echo "   Running Docker-Deployment-Test and End-To-End-Tests  "
 echo "--------------------------------------------------------"
 echo "calling http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231"
 curl 'http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231'
-
-expected="Hello Worldxxx"
+curl 'http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231'
 actual=$(curl 'http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231')
-if [[ $string == *"My long"* ]]; then
-  echo "It's there!"
+if [[ ${actual} == *"comparisonOutputElements"* ]]; then
+  echo "Test passed"
+  exit 0
+else
+  echo "Test failed"
+  exit 1
 fi
-
-##actual=$(curl -I ${service_ip}:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231)
-#echo "Expecting:" $expected
-#echo "Server says:" $actual
-#if [ "$expected" != "$actual" ]; then
-#  echo "Test failed"
-#  exit 1
-#else
-#  echo "Test passed"
-#  exit 0
-#fi
