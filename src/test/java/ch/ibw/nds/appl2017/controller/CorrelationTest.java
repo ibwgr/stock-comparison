@@ -114,9 +114,33 @@ public class CorrelationTest {{
         });
     });
 
+    describe("getCorrelationForAllStocks", () -> {
+        it("should calculate correlation for all stocks", () -> {
+            List<Stock> stocks = new ArrayList<>();
+            Stock stock1 = Stock.createStock("MSFT");
+            stock1.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
+                    TimeSerie.create(25d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
+            ));
+            stocks.add(stock1);
+
+            Stock stock2 = Stock.createStock("COKE");
+            stock2.setTimeSeries(Lists.newArrayList(
+                    TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
+                    TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
+            ));
+            stocks.add(stock2);
+
+            Correlation correlation = Correlation.create();
+            correlation.getCorrelationForAllStocks(stocks);
+
+            expect(correlation.getComparisonOutputElements().size()).toEqual(1);
+            expect(correlation.getComparisonOutputElements().get(0).getResultValue()).toEqual(1.0d);
+        });
+    });
+
     describe("addCorrelationElement", () -> {
         it("should calculate correlation and add the element", () -> {
-            List<Stock> stocks = new ArrayList<>();
             Stock stock1 = Stock.createStock("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class AlphaVantage {
+public class AlphaVantage implements StockDataService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlphaVantage.class);
     private static final HttpUtils httpUtils = HttpUtils.create();
@@ -42,6 +42,7 @@ public class AlphaVantage {
         return new AlphaVantage();
     }
 
+    @Override
     public void getStock(Stock stock, Date dateFrom, Date dateTo) {
         JSONObject jsonObject = callApi(stock.getSymbol());
         LOGGER.info("JSON for symbol {} received", stock.getSymbol());
@@ -97,7 +98,7 @@ public class AlphaVantage {
     }
 
     public Date getCloseDateFromKey(String key) {
-        Date closeDate = null;
+        Date closeDate;
         try {
             closeDate = Const.ALPHA_DATEFORMAT.parse(key);
         } catch (ParseException e) {

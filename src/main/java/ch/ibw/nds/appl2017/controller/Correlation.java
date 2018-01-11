@@ -27,7 +27,12 @@ public class Correlation extends ComparisonTemplate {
     @Override
     public ComparisonOutput calculate(List<Stock> stocks) {
         comparisonOutputElements = new ArrayList<>();
+        getCorrelationForAllStocks(stocks);
+        comparisonOutputElements.sort(Comparator.comparing(ComparisonOutputElement::getResultValue).reversed());
+        return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
+    }
 
+    public void getCorrelationForAllStocks(List<Stock> stocks) {
         for (int i = 0; i < stocks.size()-1; i++) {
             if (stocks.get(i).getTimeSeries() != null) {
                 double[] x = getClosePrices(stocks.get(i));
@@ -37,8 +42,6 @@ public class Correlation extends ComparisonTemplate {
                 }
             }
         }
-        comparisonOutputElements.sort(Comparator.comparing(ComparisonOutputElement::getResultValue).reversed());
-        return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
     }
 
     public void addCorrelationElement(Stock stockX, double[] x, Stock stockY, double[] y) {
