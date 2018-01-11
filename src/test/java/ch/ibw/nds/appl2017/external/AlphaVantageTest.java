@@ -36,7 +36,7 @@ public class AlphaVantageTest {{
             expect(stock.getTimeSeries().size()).toEqual(3);
         });
 
-        it("should return no timeseries for not existing symbol", () -> {
+        it("should throw an error for not existing symbol", () -> {
             AlphaVantage alphaVantage = AlphaVantage.create();
             Stock stock = Stock.createStock("aaaaa");
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");

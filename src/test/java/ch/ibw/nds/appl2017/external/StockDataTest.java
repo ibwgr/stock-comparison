@@ -30,6 +30,21 @@ public class StockDataTest {{
 
             ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stocks,dateFrom,dateTo);
 
+            StockData stockData = StockData.create(AlphaVantage.create());
+            List<Stock> stocksResult = stockData.getAllStocks(comparisonInput);
+
+            expect(stocksResult.size()).toEqual(2);
+        });
+
+        it("should be possible to get timeseries for all stocks with default constructor", () -> {
+            List<Stock> stocks = new ArrayList<>();
+            stocks.add(Stock.createStock("MSFT"));
+            stocks.add(Stock.createStock("COKE"));
+            Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
+            Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
+
+            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stocks,dateFrom,dateTo);
+
             StockData stockData = StockData.create();
             List<Stock> stocksResult = stockData.getAllStocks(comparisonInput);
 
