@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.WebApplicationException;
+
 import static com.mscharhag.oleaster.matcher.Matchers.expect;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
@@ -40,9 +42,8 @@ public class AlphaVantageTest {{
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
             Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
 
-            alphaVantage.getStock(stock, dateFrom, dateTo);
-
-            expect(stock.getTimeSeries()).toBeNull();
+            expect(() -> alphaVantage.getStock(stock, dateFrom, dateTo))
+                    .toThrow(WebApplicationException.class);
         });
     });
 
@@ -152,9 +153,10 @@ public class AlphaVantageTest {{
                 e.printStackTrace();
             }
 
-            List<TimeSerie> result = alphaVantage.findTimeSeries(dateFrom, dateTo, jsonObject);
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.findTimeSeries(dateFrom, dateTo, finalJsonObject))
+                    .toThrow(WebApplicationException.class);
 
-            expect(result.size()).toEqual(0);
         });
     });
 
@@ -190,4 +192,181 @@ public class AlphaVantageTest {{
         });
     });
 
+    describe("throwErrorMessage", () -> {
+        it("should throw an error with parsing error in message", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "    \"Meta Data\": {\n" +
+                        "        \"1. Information\": \"Daily Prices (open, high, low, close) and Volumes\",\n" +
+                        "        \"2. Symbol\": \"MSFT\",\n" +
+                        "        \"3. Last Refreshed\": \"2017-12-22\",\n" +
+                        "        \"4. Output Size\": \"Compact\",\n" +
+                        "        \"5. Time Zone\": \"US/Eastern\"\n" +
+                        "    }\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.throwErrorMessage(finalJsonObject))
+                    .toThrow(WebApplicationException.class, "Parsing error message from JSON response failed");
+        });
+
+        it("should throw an error with the error message of the response", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "    \"Error Message\": \"example text\"\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.throwErrorMessage(finalJsonObject))
+                    .toThrow(WebApplicationException.class, "Response error: example text");
+        });
+    });
+
+    describe("getJsonTimeSeries", () -> {
+        it("should throw an error for wrong json", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "    \"test\": \"wrong data\"\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.getJsonTimeSeries(finalJsonObject))
+                    .toThrow(WebApplicationException.class, "Parsing time series from JSON response failed");
+        });
+    });
+
+    describe("getCloseDateFromKey", () -> {
+        it("should throw an error for wrong date", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            String date = "123";
+
+            expect(() -> alphaVantage.getCloseDateFromKey(date))
+                    .toThrow(WebApplicationException.class, "Parsing date from JSON response failed");
+        });
+
+        it("should return the date object", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            String date = "2017-12-24";
+
+            Date result = alphaVantage.getCloseDateFromKey(date);
+
+            expect(DateUtils.asLocalDate(result).getYear()).toEqual(2017);
+            expect(DateUtils.asLocalDate(result).getMonthValue()).toEqual(12);
+            expect(DateUtils.asLocalDate(result).getDayOfMonth()).toEqual(24);
+        });
+    });
+
+    describe("getClosePriceFromJson", () -> {
+        it("should throw an error for wrong date", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            String date = "123";
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "        \"2017-12-22\": {\n" +
+                        "            \"1. open\": \"85.4000\",\n" +
+                        "            \"2. high\": \"85.6300\",\n" +
+                        "            \"3. low\": \"84.9200\",\n" +
+                        "            \"4. close\": \"85.5100\",\n" +
+                        "            \"5. volume\": \"14081831\"\n" +
+                        "        },\n" +
+                        "        \"2017-12-21\": {\n" +
+                        "            \"1. open\": \"86.0500\",\n" +
+                        "            \"2. high\": \"86.1000\",\n" +
+                        "            \"3. low\": \"85.4000\",\n" +
+                        "            \"4. close\": \"85.5000\",\n" +
+                        "            \"5. volume\": \"17939766\"\n" +
+                        "        }\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.getClosePriceFromJson(finalJsonObject, date))
+                    .toThrow(WebApplicationException.class, "Parsing closing price from JSON response failed");
+        });
+
+        it("should throw an error for wrong close field", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            String date = "2017-12-22";
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "        \"2017-12-22\": {\n" +
+                        "            \"1. open\": \"85.4000\",\n" +
+                        "            \"2. high\": \"85.6300\",\n" +
+                        "            \"3. low\": \"84.9200\",\n" +
+                        "            \"4. wrong-close\": \"85.5100\",\n" +
+                        "            \"5. volume\": \"14081831\"\n" +
+                        "        },\n" +
+                        "        \"2017-12-21\": {\n" +
+                        "            \"1. open\": \"86.0500\",\n" +
+                        "            \"2. high\": \"86.1000\",\n" +
+                        "            \"3. low\": \"85.4000\",\n" +
+                        "            \"4. close\": \"85.5000\",\n" +
+                        "            \"5. volume\": \"17939766\"\n" +
+                        "        }\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject finalJsonObject = jsonObject;
+            expect(() -> alphaVantage.getClosePriceFromJson(finalJsonObject, date))
+                    .toThrow(WebApplicationException.class, "Parsing closing price from JSON response failed");
+        });
+        it("should return close price", () -> {
+            AlphaVantage alphaVantage = AlphaVantage.create();
+
+            String date = "2017-12-22";
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject("{\n" +
+                        "        \"2017-12-22\": {\n" +
+                        "            \"1. open\": \"85.4000\",\n" +
+                        "            \"2. high\": \"85.6300\",\n" +
+                        "            \"3. low\": \"84.9200\",\n" +
+                        "            \"4. close\": \"85.5100\",\n" +
+                        "            \"5. volume\": \"14081831\"\n" +
+                        "        },\n" +
+                        "        \"2017-12-21\": {\n" +
+                        "            \"1. open\": \"86.0500\",\n" +
+                        "            \"2. high\": \"86.1000\",\n" +
+                        "            \"3. low\": \"85.4000\",\n" +
+                        "            \"4. close\": \"85.5000\",\n" +
+                        "            \"5. volume\": \"17939766\"\n" +
+                        "        }\n" +
+                        "}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Double result = alphaVantage.getClosePriceFromJson(jsonObject, date);
+
+            expect(result).toEqual(85.5100d);
+        });
+    });
 }}

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 
 public class HttpUtils {
@@ -32,7 +33,7 @@ public class HttpUtils {
         return new HttpUtils();
     }
 
-    private JSONObject getJsonFromResponse(HttpResponse httpResponse) {
+    public JSONObject getJsonFromResponse(HttpResponse httpResponse) {
         JSONObject responseJson = new JSONObject();
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
@@ -40,28 +41,33 @@ public class HttpUtils {
                 String responseString = EntityUtils.toString(entity, UTF_8);
                 responseJson = new JSONObject(responseString);
             } catch (IOException | JSONException e) {
-                LOGGER.trace("Parsing JSON response failed", e);
+                String errorMessage = "Parsing JSON response failed";
+                LOGGER.error(errorMessage);
+                throw new WebApplicationException(errorMessage, e);
             }
         }
         return responseJson;
     }
 
-    private HttpResponse getHttpResponse(HttpUriRequest request) {
+    public HttpResponse getHttpResponse(HttpUriRequest request) {
         DefaultHttpResponseFactory factory = new DefaultHttpResponseFactory();
-        HttpResponse httpResponse = factory.newHttpResponse(
+        factory.newHttpResponse(
                 new BasicStatusLine(HttpVersion.HTTP_1_1
-                        ,HttpStatus.SC_OK
-                        ,null
+                        , HttpStatus.SC_OK
+                        , null
                 )
-                ,null
+                , null
         );
+        HttpResponse httpResponse;
         try {
             httpResponse = HttpClientBuilder
                     .create()
                     .build()
                     .execute(request);
         } catch (IOException e) {
-            LOGGER.trace("Http request failed", e);
+            String errorMessage = "Http request failed";
+            LOGGER.error(errorMessage, e);
+            throw new WebApplicationException(errorMessage, e);
         }
         return httpResponse;
     }

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.WebApplicationException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,17 +55,19 @@ public class AlphaVantage {
     private boolean isErrorResponse(JSONObject jsonObject) {
         boolean hasErrorMessage = jsonObject.has("Error Message");
         if (hasErrorMessage) {
-            logErrorMessage(jsonObject);
+            throwErrorMessage(jsonObject);
             return true;
         }
         return false;
     }
 
-    private void logErrorMessage(JSONObject jsonObject) {
+    public void throwErrorMessage(JSONObject jsonObject) {
         try {
-            LOGGER.error("Response Error: {}", jsonObject.getString("Error Message"));
+            throw new WebApplicationException("Response error: " + jsonObject.getString("Error Message"));
         } catch (JSONException e) {
-            LOGGER.trace("Parsing Error Message from JSON response failed", e);
+            String errorMessage = "Parsing error message from JSON response failed";
+            LOGGER.error(errorMessage, e);
+            throw new WebApplicationException(errorMessage, e);
         }
     }
 
@@ -81,27 +84,31 @@ public class AlphaVantage {
         return timeSeries;
     }
 
-    private JSONObject getJsonTimeSeries(JSONObject jsonObject) {
+    public JSONObject getJsonTimeSeries(JSONObject jsonObject) {
         JSONObject jsonTimeSeries = new JSONObject();
         try {
             jsonTimeSeries = jsonObject.getJSONObject(JSON_TIME_SERIES_DAILY1);
         } catch (JSONException e) {
-            LOGGER.trace("Parsing time series from JSON response failed", e);
+            String errorMessage = "Parsing time series from JSON response failed";
+            LOGGER.error(errorMessage, e);
+            throw new WebApplicationException(errorMessage, e);
         }
         return jsonTimeSeries;
     }
 
-    private Date getCloseDateFromKey(String key) {
+    public Date getCloseDateFromKey(String key) {
         Date closeDate = null;
         try {
             closeDate = Const.ALPHA_DATEFORMAT.parse(key);
         } catch (ParseException e) {
-            LOGGER.trace("Parsing date from JSON response failed", e);
+            String errorMessage = "Parsing date from JSON response failed";
+            LOGGER.error(errorMessage, e);
+            throw new WebApplicationException(errorMessage, e);
         }
         return closeDate;
     }
 
-    private Double getClosePriceFromJson(JSONObject jsonTimeSeries, String key) {
+    public Double getClosePriceFromJson(JSONObject jsonTimeSeries, String key) {
         Double closePrice = 0d;
         try {
             Object jsonTimeSeriesKey = jsonTimeSeries.get(key);
@@ -109,7 +116,9 @@ public class AlphaVantage {
                 closePrice = ((JSONObject) jsonTimeSeriesKey).getDouble(JSON_CLOSE_PRICE);
             }
         } catch (JSONException e) {
-            LOGGER.trace("Parsing closing price from JSON response failed", e);
+            String errorMessage = "Parsing closing price from JSON response failed";
+            LOGGER.error(errorMessage, e);
+            throw new WebApplicationException(errorMessage, e);
         }
         return closePrice;
     }
