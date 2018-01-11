@@ -11,7 +11,6 @@ public class  StockData {
     private AlphaVantage alphaVantage = AlphaVantage.create();
 
     private StockData(){
-
     }
 
     public static StockData create(){

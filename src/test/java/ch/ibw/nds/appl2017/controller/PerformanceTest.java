@@ -77,9 +77,8 @@ public class PerformanceTest {{
             Double price1 = 0d;
             Double price2 = 10d;
 
-            expect(() -> {
-                Double result = performance.calculatePerformance(price1, price2);
-            }).toThrow(IllegalArgumentException.class);
+            expect(() -> performance.calculatePerformance(price1, price2))
+                    .toThrow(IllegalArgumentException.class);
         });
     });
 
