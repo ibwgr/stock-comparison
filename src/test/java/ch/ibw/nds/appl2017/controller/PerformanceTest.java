@@ -80,6 +80,16 @@ public class PerformanceTest {{
             expect(() -> performance.calculatePerformance(price1, price2))
                     .toThrow(IllegalArgumentException.class);
         });
+
+        it("should throw an error for price1 null", () -> {
+            Performance performance = Performance.create();
+
+            Double price1 = null;
+            Double price2 = 10d;
+
+            expect(() -> performance.calculatePerformance(price1, price2))
+                    .toThrow(IllegalArgumentException.class);
+        });
     });
 
     describe("getPerformance", () -> {
@@ -101,6 +111,16 @@ public class PerformanceTest {{
             Double result = performance.getPerformance(timeSerie1, timeSerie2);
 
             expect(result).toEqual(-10d);
+        });
+
+        it("should return 0 with a missing timeserie", () -> {
+            Optional<TimeSerie> timeSerie1 = Optional.of(TimeSerie.create(100d, Const.ALPHA_DATEFORMAT.parse("2017-12-21")));
+            Optional<TimeSerie> timeSerie2 = Optional.empty();
+
+            Performance performance = Performance.create();
+            Double result = performance.getPerformance(timeSerie1, timeSerie2);
+
+            expect(result).toEqual(0.0d);
         });
     });
 
