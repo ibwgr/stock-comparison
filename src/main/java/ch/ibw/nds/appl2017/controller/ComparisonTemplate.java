@@ -1,6 +1,5 @@
 package ch.ibw.nds.appl2017.controller;
 
-import ch.ibw.nds.appl2017.external.AlphaVantage;
 import ch.ibw.nds.appl2017.external.StockData;
 import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.ComparisonOutput;
@@ -20,7 +19,7 @@ public abstract class ComparisonTemplate {
     }
 
     private List<Stock> getAllStocks(ComparisonInput comparisonInput) {
-        StockData stockData = StockData.create(AlphaVantage.create());
+        StockData stockData = StockData.create();
         return stockData.getAllStocks(comparisonInput);
     }
 
