@@ -2,7 +2,7 @@
 mvn package -DskipTests
 
 2.)
-docker-compose up            (liest docer-compose.yml)
+docker-compose up            (liest docker-compose.yml)
 
 3.) Aufruf mit:
 http://localhost:8080/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
@@ -26,5 +26,3 @@ ________________________________________________________________________________
 anstatt:
 http://localhost:8080/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
-
-doku: http://geekyplatypus.com/packaging-and-serving-your-java-application-with-docker/

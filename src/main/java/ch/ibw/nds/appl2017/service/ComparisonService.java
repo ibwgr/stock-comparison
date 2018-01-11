@@ -1,10 +1,13 @@
 package ch.ibw.nds.appl2017.service;
 
 import ch.ibw.nds.appl2017.controller.ComparisonTemplate;
+import ch.ibw.nds.appl2017.controller.Correlation;
+import ch.ibw.nds.appl2017.controller.Performance;
+import ch.ibw.nds.appl2017.model.ComparisonInput;
+import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-
-import java.util.List;
+import org.apache.http.HttpStatus;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,11 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import ch.ibw.nds.appl2017.controller.Correlation;
-import ch.ibw.nds.appl2017.controller.Performance;
-import ch.ibw.nds.appl2017.model.ComparisonInput;
-import ch.ibw.nds.appl2017.model.ComparisonOutput;
+import java.util.List;
 
 @Path("/comparison")
 public class ComparisonService {
@@ -50,9 +49,9 @@ public class ComparisonService {
     public Response getComparisonOutputResponse(ComparisonInput comparisonInput, ComparisonTemplate comparisonTemplate) {
         try {
             ComparisonOutput comparisonOutput = comparisonTemplate.compare(comparisonInput);
-            return Response.status(200).entity(comparisonOutput).build();
+            return Response.status(HttpStatus.SC_OK).entity(comparisonOutput).build();
         } catch (Exception e) {
-            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal-error")).build();
+            return Response.status(HttpStatus.SC_BAD_GATEWAY).entity(ErrorMessage.createErrorMessage("internal-error")).build();
         }
     }
 
