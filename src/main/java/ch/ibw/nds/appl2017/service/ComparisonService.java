@@ -1,5 +1,6 @@
 package ch.ibw.nds.appl2017.service;
 
+import ch.ibw.nds.appl2017.controller.ComparisonTemplate;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 
@@ -30,19 +31,8 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        return getComparisonCorrelationOutputResponse(comparisonInput);
+        return getComparisonOutputResponse(comparisonInput, Correlation.create());
     }
-
-    public Response getComparisonCorrelationOutputResponse(ComparisonInput comparisonInput) {
-        try {
-            Correlation correlation = Correlation.create();
-            ComparisonOutput comparisonOutput = correlation.compare(comparisonInput);
-            return Response.status(200).entity(comparisonOutput).build();
-        } catch (Exception e) {
-            return Response.status(502).entity(ErrorMessage.createErrorMessage("internal-error")).build();
-        }
-    }
-
 
     @Path("/performance")
     @GET
@@ -54,13 +44,12 @@ public class ComparisonService {
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
-        return getComparisonPerformanceOutputResponse(comparisonInput);
+        return getComparisonOutputResponse(comparisonInput, Performance.create());
     }
 
-    public Response getComparisonPerformanceOutputResponse(ComparisonInput comparisonInput) {
+    public Response getComparisonOutputResponse(ComparisonInput comparisonInput, ComparisonTemplate comparisonTemplate) {
         try {
-            Performance performance = Performance.create();
-            ComparisonOutput comparisonOutput = performance.compare(comparisonInput);
+            ComparisonOutput comparisonOutput = comparisonTemplate.compare(comparisonInput);
             return Response.status(200).entity(comparisonOutput).build();
         } catch (Exception e) {
             return Response.status(502).entity(ErrorMessage.createErrorMessage("internal-error")).build();
