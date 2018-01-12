@@ -13,7 +13,7 @@ script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 - docker-compose up -d
 - docker ps
-- bash integrationtests.sh
+- bash travis-end-to-end-tests.sh
 - docker-compose down
 - docker ps
 notifications:
