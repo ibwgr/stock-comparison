@@ -1,6 +1,8 @@
 package ch.ibw.nds.appl2017.service;
 
 import ch.ibw.nds.appl2017.controller.ComparisonTemplate;
+import ch.ibw.nds.appl2017.controller.Correlation;
+import ch.ibw.nds.appl2017.controller.Performance;
 import ch.ibw.nds.appl2017.model.ComparisonInput;
 import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import ch.ibw.nds.appl2017.model.ComparisonOutputElement;
@@ -64,6 +66,30 @@ public class ComparisonServiceTest {{
                     );
             Response response = spiedComparisonService.getCorrelation(stockStringList, fromDateString, toDateString);
             expect(response.getStatus()).toEqual(HttpStatus.SC_OK);
+        });
+
+
+
+        it("should return http 502, mocking the business logic call for Correlation, assuming an exeption occured", () -> {
+            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList,fromDateString, toDateString);
+            ComparisonTemplate spiedComparisonTemplate = Mockito.mock(Correlation.class);
+            Mockito.when(spiedComparisonTemplate.compare(Mockito.any(ComparisonInput.class)))
+                    .thenThrow(new RuntimeException()
+                    );
+            ComparisonService comparisonService = new ComparisonService();
+            Response response = comparisonService.getComparisonOutputResponse(comparisonInput, spiedComparisonTemplate);
+            expect(response.getStatus()).toEqual(HttpStatus.SC_BAD_GATEWAY);
+        });
+
+        it("should return http 502, mocking the business logic call for Performance, assuming an exeption occured", () -> {
+            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList,fromDateString, toDateString);
+            ComparisonTemplate spiedComparisonTemplate = Mockito.mock(Performance.class);
+            Mockito.when(spiedComparisonTemplate.compare(Mockito.any(ComparisonInput.class)))
+                    .thenThrow(new RuntimeException()
+                    );
+            ComparisonService comparisonService = new ComparisonService();
+            Response response = comparisonService.getComparisonOutputResponse(comparisonInput, spiedComparisonTemplate);
+            expect(response.getStatus()).toEqual(HttpStatus.SC_BAD_GATEWAY);
         });
     });
 
