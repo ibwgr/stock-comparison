@@ -13,7 +13,7 @@ public class StockTest {{
     describe("Test Creation of Simple Stock Objects (Without TimeSeries)", () -> {
         it("should create a simple stock object", () -> {
            String stockString1 = "NESN";
-           Stock stock1 = Stock.createStock(stockString1);
+           Stock stock1 = Stock.create(stockString1);
            System.out.println(stock1);
            expect(stock1.getSymbol()).toEqual(stockString1);
         });

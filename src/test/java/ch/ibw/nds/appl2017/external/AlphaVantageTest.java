@@ -9,14 +9,13 @@ import org.json.JSONObject;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.WebApplicationException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static com.mscharhag.oleaster.matcher.Matchers.expect;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by dieterbiedermann on 18.12.17.
@@ -27,7 +26,7 @@ public class AlphaVantageTest {{
     describe("getStock", () -> {
         it("should add TimeSeries to Stock for symbol", () -> {
             AlphaVantage alphaVantage = AlphaVantage.create();
-            Stock stock = Stock.createStock("msft");
+            Stock stock = Stock.create("msft");
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
             Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
 
@@ -38,7 +37,7 @@ public class AlphaVantageTest {{
 
         it("should throw an error for not existing symbol", () -> {
             AlphaVantage alphaVantage = AlphaVantage.create();
-            Stock stock = Stock.createStock("aaaaa");
+            Stock stock = Stock.create("aaaaa");
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
             Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
 

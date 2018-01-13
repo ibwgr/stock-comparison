@@ -29,7 +29,7 @@ public class ComparisonService {
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
-        ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
+        ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Correlation.create());
     }
 
@@ -42,7 +42,7 @@ public class ComparisonService {
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
-        ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockSymbols, fromDateString, toDateString);
+        ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Performance.create());
     }
 

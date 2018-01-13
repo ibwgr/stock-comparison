@@ -29,7 +29,7 @@ public class Correlation extends ComparisonTemplate {
         comparisonOutputElements = new ArrayList<>();
         getCorrelationForAllStocks(stocks);
         comparisonOutputElements.sort(Comparator.comparing(ComparisonOutputElement::getResultValue).reversed());
-        return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
+        return ComparisonOutput.create(comparisonOutputElements);
     }
 
     public void getCorrelationForAllStocks(List<Stock> stocks) {
@@ -47,7 +47,7 @@ public class Correlation extends ComparisonTemplate {
     public void addCorrelationElement(Stock stockX, double[] x, Stock stockY, double[] y) {
         double corr = getCorrelation(x, y);
         LOGGER.info("Symbol {} and {} have a correlation of {}", stockX.getSymbol(), stockY.getSymbol(), corr);
-        comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stockX, stockY, corr));
+        comparisonOutputElements.add(ComparisonOutputElement.create(stockX, stockY, corr));
     }
 
     public double getCorrelation(double[] x, double[] y) {

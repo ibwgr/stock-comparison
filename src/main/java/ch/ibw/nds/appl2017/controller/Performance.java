@@ -27,7 +27,7 @@ public class Performance extends ComparisonTemplate {
         comparisonOutputElements = new ArrayList<>();
         stocks.forEach(this::addPerformanceElement);
         comparisonOutputElements.sort(Comparator.comparing(ComparisonOutputElement::getResultValue).reversed());
-        return ComparisonOutput.createComparisonOutput(comparisonOutputElements);
+        return ComparisonOutput.create(comparisonOutputElements);
     }
 
     public void addPerformanceElement(Stock stock) {
@@ -37,7 +37,7 @@ public class Performance extends ComparisonTemplate {
                 .reduce((a, b) -> a.getCloseDate().after(b.getCloseDate()) ? a : b);
         Double perf = getPerformance(timeSerie1, timeSerie2);
         LOGGER.info("Symbol {} has a performance of {}", stock.getSymbol(), perf);
-        comparisonOutputElements.add(ComparisonOutputElement.createComparisonOutputElement(stock, perf));
+        comparisonOutputElements.add(ComparisonOutputElement.create(stock, perf));
     }
 
     public Double getPerformance(Optional<TimeSerie> timeSerie1, Optional<TimeSerie> timeSerie2) {

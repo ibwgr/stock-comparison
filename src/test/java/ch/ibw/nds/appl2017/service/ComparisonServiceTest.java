@@ -33,11 +33,11 @@ public class ComparisonServiceTest {{
 
     describe("Test Service with mocked business logic", () -> {
         it("should return http 200 on getPerformance", () -> {
-            ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
+            ComparisonOutput comparisonOutput = ComparisonOutput.create(
                     Arrays.asList(
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("NESN"), 1.15) ,
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("GOOGL"), 1.07) ,
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("AI"), 1.01)
+                            ComparisonOutputElement.create(Stock.create("NESN"), 1.15) ,
+                            ComparisonOutputElement.create(Stock.create("GOOGL"), 1.07) ,
+                            ComparisonOutputElement.create(Stock.create("AI"), 1.01)
                     )
             );
             ComparisonService comparisonService = new ComparisonService();
@@ -51,11 +51,11 @@ public class ComparisonServiceTest {{
         });
 
         it("should return http 200 on getCorrelation", () -> {
-            ComparisonOutput comparisonOutput = ComparisonOutput.createComparisonOutput(
+            ComparisonOutput comparisonOutput = ComparisonOutput.create(
                     Arrays.asList(
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("NESN"), 1.15) ,
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("GOOGL"), 1.07) ,
-                            ComparisonOutputElement.createComparisonOutputElement(Stock.createStock("AI"), 1.01)
+                            ComparisonOutputElement.create(Stock.create("NESN"), 1.15) ,
+                            ComparisonOutputElement.create(Stock.create("GOOGL"), 1.07) ,
+                            ComparisonOutputElement.create(Stock.create("AI"), 1.01)
                     )
             );
             ComparisonService comparisonService = new ComparisonService();
@@ -71,7 +71,7 @@ public class ComparisonServiceTest {{
 
 
         it("should return http 502, mocking the business logic call for Correlation, assuming an exeption occured", () -> {
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList,fromDateString, toDateString);
+            ComparisonInput comparisonInput = ComparisonInput.create(stockStringList,fromDateString, toDateString);
             ComparisonTemplate spiedComparisonTemplate = Mockito.mock(Correlation.class);
             Mockito.when(spiedComparisonTemplate.compare(Mockito.any(ComparisonInput.class)))
                     .thenThrow(new RuntimeException()
@@ -82,7 +82,7 @@ public class ComparisonServiceTest {{
         });
 
         it("should return http 502, mocking the business logic call for Performance, assuming an exeption occured", () -> {
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList,fromDateString, toDateString);
+            ComparisonInput comparisonInput = ComparisonInput.create(stockStringList,fromDateString, toDateString);
             ComparisonTemplate spiedComparisonTemplate = Mockito.mock(Performance.class);
             Mockito.when(spiedComparisonTemplate.compare(Mockito.any(ComparisonInput.class)))
                     .thenThrow(new RuntimeException()

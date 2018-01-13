@@ -21,13 +21,13 @@ public class CorrelationTest {{
     describe("calculate", () -> {
         it("should calculate correlation for 2 stocks with 1 timeseries", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
             ));
             stocks.add(stock1);
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
             ));
@@ -42,14 +42,14 @@ public class CorrelationTest {{
 
         it("should calculate correlation for 2 stocks", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(24d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
             ));
             stocks.add(stock1);
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
@@ -65,7 +65,7 @@ public class CorrelationTest {{
 
         it("should calculate correlation for 4 stocks in correct order", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(24d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
@@ -74,7 +74,7 @@ public class CorrelationTest {{
             ));
             stocks.add(stock1);
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
@@ -83,7 +83,7 @@ public class CorrelationTest {{
             ));
             stocks.add(stock2);
 
-            Stock stock3 = Stock.createStock("FLOW");
+            Stock stock3 = Stock.create("FLOW");
             stock3.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(4d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(8d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
@@ -92,7 +92,7 @@ public class CorrelationTest {{
             ));
             stocks.add(stock3);
 
-            Stock stock4 = Stock.createStock("XOXO");
+            Stock stock4 = Stock.create("XOXO");
             stock4.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(8d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(9d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
@@ -117,14 +117,14 @@ public class CorrelationTest {{
     describe("getCorrelationForAllStocks", () -> {
         it("should calculate correlation for all stocks", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
                     TimeSerie.create(25d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
             ));
             stocks.add(stock1);
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
                     TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
@@ -141,13 +141,13 @@ public class CorrelationTest {{
 
     describe("addCorrelationElement", () -> {
         it("should calculate correlation and add the element", () -> {
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
                     TimeSerie.create(25d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
             ));
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(29d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
                     TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
@@ -190,7 +190,7 @@ public class CorrelationTest {{
 
     describe("getClosePrices", () -> {
         it("should return the close price as an array", () -> {
-            Stock stock = Stock.createStock("MSFT");
+            Stock stock = Stock.create("MSFT");
             stock.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(23d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
             ));

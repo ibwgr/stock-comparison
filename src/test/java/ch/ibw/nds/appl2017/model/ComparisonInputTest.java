@@ -25,8 +25,8 @@ public class ComparisonInputTest {{
     stockStringList.add((stockString1));
     stockStringList.add((stockString2));
 
-    Stock stock1 = Stock.createStock(stockString1);
-    Stock stock2 = Stock.createStock(stockString2);
+    Stock stock1 = Stock.create(stockString1);
+    Stock stock2 = Stock.create(stockString2);
     List<Stock> stockList = new ArrayList();
     stockList.add(stock1);
     stockList.add(stock2);
@@ -37,7 +37,7 @@ public class ComparisonInputTest {{
 
     describe("Test ComparisonInput Building Methods", () -> {
         it("should bundle Elements for a ComparisonInput Object", () -> {
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringList, fromDateString, toDateString);
+            ComparisonInput comparisonInput = ComparisonInput.create(stockStringList, fromDateString, toDateString);
             System.out.println(comparisonInput);
             expect(comparisonInput.getStocks().size()).toEqual(stockStringList.size());
             expect(comparisonInput.getStocks().get(0).getSymbol()).toEqual(stockString1);

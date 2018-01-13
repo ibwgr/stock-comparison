@@ -16,7 +16,7 @@ public class ComparisonOutput {
         LOGGER.debug(this.toString());
     }
 
-    public static ComparisonOutput createComparisonOutput(List<ComparisonOutputElement> comparisonOutputElements) {
+    public static ComparisonOutput create(List<ComparisonOutputElement> comparisonOutputElements) {
         return new ComparisonOutput(comparisonOutputElements);
     }
 
