@@ -24,8 +24,8 @@ public class ValidatorTest {{
     stockStringList.add((stockString1));
     stockStringList.add((stockString2));
 
-    Stock stock1 = Stock.createStock(stockString1);
-    Stock stock2 = Stock.createStock(stockString2);
+    Stock stock1 = Stock.create(stockString1);
+    Stock stock2 = Stock.create(stockString2);
     List<Stock> stockList = new ArrayList();
     stockList.add(stock1);
     stockList.add(stock2);

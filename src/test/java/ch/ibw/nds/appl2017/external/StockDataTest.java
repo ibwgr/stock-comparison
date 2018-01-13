@@ -23,12 +23,12 @@ public class StockDataTest {{
     describe("getAllStocks", () -> {
         it("should be possible to get timeseries for all stocks", () -> {
             List<Stock> stocks = new ArrayList<>();
-            stocks.add(Stock.createStock("MSFT"));
-            stocks.add(Stock.createStock("COKE"));
+            stocks.add(Stock.create("MSFT"));
+            stocks.add(Stock.create("COKE"));
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
             Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
 
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stocks,dateFrom,dateTo);
+            ComparisonInput comparisonInput = ComparisonInput.create(stocks,dateFrom,dateTo);
 
             StockData stockData = StockData.create(AlphaVantage.create());
             List<Stock> stocksResult = stockData.getAllStocks(comparisonInput);
@@ -38,12 +38,12 @@ public class StockDataTest {{
 
         it("should be possible to get timeseries for all stocks with default constructor", () -> {
             List<Stock> stocks = new ArrayList<>();
-            stocks.add(Stock.createStock("MSFT"));
-            stocks.add(Stock.createStock("COKE"));
+            stocks.add(Stock.create("MSFT"));
+            stocks.add(Stock.create("COKE"));
             Date dateFrom = Const.ALPHA_DATEFORMAT.parse("2017-12-18");
             Date dateTo = Const.ALPHA_DATEFORMAT.parse("2017-12-20");
 
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stocks,dateFrom,dateTo);
+            ComparisonInput comparisonInput = ComparisonInput.create(stocks,dateFrom,dateTo);
 
             StockData stockData = StockData.create();
             List<Stock> stocksResult = stockData.getAllStocks(comparisonInput);

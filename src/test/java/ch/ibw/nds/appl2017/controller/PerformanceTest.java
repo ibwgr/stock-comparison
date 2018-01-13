@@ -126,7 +126,7 @@ public class PerformanceTest {{
 
     describe("addPerformanceElement", () -> {
         it("should calculate performance and add the element", () -> {
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(20d, Const.ALPHA_DATEFORMAT.parse("2017-12-27")),
                     TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-28"))
@@ -143,7 +143,7 @@ public class PerformanceTest {{
     describe("calculate", () -> {
         it("should return the ComparisonOutput for 1 stock with 2 timeSeries", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(20d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
                     TimeSerie.create(40d, Const.ALPHA_DATEFORMAT.parse("2017-12-27"))
@@ -159,7 +159,7 @@ public class PerformanceTest {{
 
         it("should return the ComparisonOutput for 1 stock with 3 timeSeries", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(20d, Const.ALPHA_DATEFORMAT.parse("2017-12-25")),
                     TimeSerie.create(30d, Const.ALPHA_DATEFORMAT.parse("2017-12-26")),
@@ -176,7 +176,7 @@ public class PerformanceTest {{
 
         it("should return the ComparisonOutput for 1 stock with 5 timeSeries", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(20d, Const.ALPHA_DATEFORMAT.parse("2017-12-21")),
                     TimeSerie.create(10d, Const.ALPHA_DATEFORMAT.parse("2017-12-20")),
@@ -195,14 +195,14 @@ public class PerformanceTest {{
 
         it("should return the ComparisonOutputs for 2 stock with 2 timeSeries in correct order", () -> {
             List<Stock> stocks = new ArrayList<>();
-            Stock stock1 = Stock.createStock("MSFT");
+            Stock stock1 = Stock.create("MSFT");
             stock1.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(1000d, Const.ALPHA_DATEFORMAT.parse("2017-12-21")),
                     TimeSerie.create(1010d, Const.ALPHA_DATEFORMAT.parse("2017-12-26"))
             ));
             stocks.add(stock1);
 
-            Stock stock2 = Stock.createStock("COKE");
+            Stock stock2 = Stock.create("COKE");
             stock2.setTimeSeries(Lists.newArrayList(
                     TimeSerie.create(100d, Const.ALPHA_DATEFORMAT.parse("2017-12-21")),
                     TimeSerie.create(110d, Const.ALPHA_DATEFORMAT.parse("2017-12-26"))

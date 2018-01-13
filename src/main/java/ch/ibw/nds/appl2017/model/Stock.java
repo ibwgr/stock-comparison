@@ -14,11 +14,11 @@ public class Stock {
         this.timeSeries = timeSeries;
     }
 
-    public static Stock createStock (String symbol, List<TimeSerie> timeSeries) {
+    public static Stock create(String symbol, List<TimeSerie> timeSeries) {
         return new Stock(symbol,timeSeries);
     }
-    public static Stock createStock (String symbol) {
-        return createStock(symbol,null);
+    public static Stock create(String symbol) {
+        return create(symbol,null);
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ComparisonServiceIntegrationTest {{
     describe("getComparisonOutputResponse", () -> {
         it("should return status 200 for correct symbol", () -> {
             ComparisonService comparisonService = new ComparisonService();
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringListSmall,fromDateString, toDateString);
+            ComparisonInput comparisonInput = ComparisonInput.create(stockStringListSmall,fromDateString, toDateString);
 
             Response response = comparisonService.getComparisonOutputResponse(comparisonInput, Performance.create());
 
@@ -69,7 +69,7 @@ public class ComparisonServiceIntegrationTest {{
 
         it("should return status 502 for wrong symbol", () -> {
             ComparisonService comparisonService = new ComparisonService();
-            ComparisonInput comparisonInput = ComparisonInput.createComparisonInput(stockStringFailList,fromDateString, toDateString);
+            ComparisonInput comparisonInput = ComparisonInput.create(stockStringFailList,fromDateString, toDateString);
 
             Response response = comparisonService.getComparisonOutputResponse(comparisonInput, Performance.create());
 

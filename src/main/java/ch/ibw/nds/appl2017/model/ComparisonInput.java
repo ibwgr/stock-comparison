@@ -26,11 +26,11 @@ public class ComparisonInput {
         LOGGER.debug(this.toString());
     }
 
-    public static ComparisonInput createComparisonInput (List<Stock> stocks, Date dateFrom, Date dateTo) {
+    public static ComparisonInput create(List<Stock> stocks, Date dateFrom, Date dateTo) {
         return new ComparisonInput(stocks, dateFrom,  dateTo);
     }
 
-    public static ComparisonInput createComparisonInput(List<String> stockSymbols, String fromDateString, String toDateString) {
+    public static ComparisonInput create(List<String> stockSymbols, String fromDateString, String toDateString) {
         Date dateFrom = getDateFromApiDateString(fromDateString);
         Date dateTo = getDateFromApiDateString(toDateString);
         List<Stock> stockList = convertToStockList(stockSymbols);
@@ -41,7 +41,7 @@ public class ComparisonInput {
     public static List convertToStockList(List<String> stockSymbols) {
         List<Stock> stockList = new ArrayList();
         for (String stockSymbol: stockSymbols) {
-            stockList.add(Stock.createStock(stockSymbol));
+            stockList.add(Stock.create(stockSymbol));
         }
         return stockList;
     }

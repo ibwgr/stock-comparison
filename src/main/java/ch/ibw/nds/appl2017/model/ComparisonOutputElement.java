@@ -18,11 +18,11 @@ public class ComparisonOutputElement {
         LOGGER.debug(this.toString());
     }
 
-    public static ComparisonOutputElement createComparisonOutputElement(Stock stock, Double resultValue) {
+    public static ComparisonOutputElement create(Stock stock, Double resultValue) {
         return new ComparisonOutputElement(stock.getSymbol(), null, resultValue);
     }
 
-    public static ComparisonOutputElement createComparisonOutputElement(Stock stock, Stock stock2, Double resultValue) {
+    public static ComparisonOutputElement create(Stock stock, Stock stock2, Double resultValue) {
         return new ComparisonOutputElement(stock.getSymbol(), stock2.getSymbol(), resultValue);
     }
 
