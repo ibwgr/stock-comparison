@@ -25,10 +25,4 @@ notifications:
     on_success: never
     on_failure: never
 #
-#deploy:
-#  skip_cleanup: true
-#  provider: heroku
-#  api_key:
-#      secure: "661a6477-e6be-4956-823c-326789fc87fa"
-#  on:
-#      all_branches: true
+# todo pw in env variable auslagern
