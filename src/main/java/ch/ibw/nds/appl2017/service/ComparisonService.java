@@ -1,13 +1,11 @@
 package ch.ibw.nds.appl2017.service;
 
-import ch.ibw.nds.appl2017.controller.ComparisonTemplate;
-import ch.ibw.nds.appl2017.controller.Correlation;
-import ch.ibw.nds.appl2017.controller.Performance;
-import ch.ibw.nds.appl2017.model.ComparisonInput;
-import ch.ibw.nds.appl2017.model.ComparisonOutput;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
+
 import org.apache.http.HttpStatus;
+
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,7 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import ch.ibw.nds.appl2017.controller.ComparisonTemplate;
+import ch.ibw.nds.appl2017.controller.Correlation;
+import ch.ibw.nds.appl2017.controller.Performance;
+import ch.ibw.nds.appl2017.model.ComparisonInput;
+import ch.ibw.nds.appl2017.model.ComparisonOutput;
 
 @Path("/comparison")
 public class ComparisonService {
@@ -28,6 +31,13 @@ public class ComparisonService {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
+
+        String ENV_PORT = System.getenv().get("PORT");
+        String ENV_DYNO = System.getenv().get("DYNO");
+        if(ENV_PORT != null && ENV_DYNO != null) {
+            System.getProperties().put("server.port", ENV_PORT);
+        }
+
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Correlation.create());
@@ -41,6 +51,13 @@ public class ComparisonService {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
+
+        String ENV_PORT = System.getenv().get("PORT");
+        String ENV_DYNO = System.getenv().get("DYNO");
+        if(ENV_PORT != null && ENV_DYNO != null) {
+            System.getProperties().put("server.port", ENV_PORT);
+        }
+
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Performance.create());
