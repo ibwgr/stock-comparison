@@ -20,10 +20,10 @@ notifications:
   email:
     on_success: never
     on_failure: never
-deploy:
-  skip_cleanup: true
-  provider: heroku
-  api_key:
-      secure: "c72b3fc3-3640-4da9-a28d-4bcb2e0a0d15"
-  on:
-      all_branches: true
+#deploy:
+#  skip_cleanup: true
+#  provider: heroku
+#  api_key:
+#      secure: "c72b3fc3-3640-4da9-a28d-4bcb2e0a0d15"
+#  on:
+#      all_branches: true
