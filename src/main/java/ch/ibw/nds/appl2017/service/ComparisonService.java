@@ -31,13 +31,6 @@ public class ComparisonService {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
-
-        String ENV_PORT = System.getenv().get("PORT");
-        String ENV_DYNO = System.getenv().get("DYNO");
-        if(ENV_PORT != null && ENV_DYNO != null) {
-            System.getProperties().put("server.port", ENV_PORT);
-        }
-
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Correlation.create());
@@ -51,13 +44,6 @@ public class ComparisonService {
             @QueryParam("stock") final List<String> stockSymbols,
             @QueryParam("dateFrom") final String fromDateString,
             @QueryParam("dateTo") final String toDateString) {
-
-        String ENV_PORT = System.getenv().get("PORT");
-        String ENV_DYNO = System.getenv().get("DYNO");
-        if(ENV_PORT != null && ENV_DYNO != null) {
-            System.getProperties().put("server.port", ENV_PORT);
-        }
-
         Validator.validateInput(stockSymbols, fromDateString, toDateString);
         ComparisonInput comparisonInput = ComparisonInput.create(stockSymbols, fromDateString, toDateString);
         return getComparisonOutputResponse(comparisonInput, Performance.create());
