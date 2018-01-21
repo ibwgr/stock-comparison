@@ -10,13 +10,20 @@ addons:
     branches:
     - master
 script:
-- travis_retry mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- travis_retry mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar #-DskipTests
 - docker-compose up -d
 - docker ps
 - bash travis-end-to-end-tests.sh
 - docker-compose down
 - docker ps
+  # start deployment
+- docker login --username=_ --password="661a6477-e6be-4956-823c-326789fc87fa" registry.heroku.com
+- docker build --rm=false -t registry.heroku.com/stock-comp/web .
+- docker push registry.heroku.com/stock-comp/web
 notifications:
   email:
     on_success: never
     on_failure: never
+#
+# todo docker pw in env variable auslagern
+#
