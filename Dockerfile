@@ -1,8 +1,8 @@
 from tomcat
-MAINTAINER xyz
 ADD ./target/stock-comparison-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 ADD ./target/stock-comparison-1.0-SNAPSHOT /usr/local/tomcat/webapps/ROOT
 CMD ["catalina.sh","run"]
+EXPOSE 8080
 #
 #
 #  docker build -t stockcomparison_api_container .

@@ -29,7 +29,7 @@ Wenn lokal ein Server wie Glassfish oder Tomcat verwendet wird, dann sind dir UR
 Heroku mit Docker Deployment:
 * --offen--
 
-OpenShift (als Maven Build und WAR Deployment): 
+OpenShift (JBoss mit Maven Build und WAR Deployment): 
 * http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/stock-comparison-1.0-SNAPSHOT/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 * http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/stock-comparison-1.0-SNAPSHOT/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
