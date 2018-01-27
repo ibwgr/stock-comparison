@@ -6,7 +6,7 @@ services:
 addons:
   sonarcloud:
     organization: reto7-github
-    token: ${SONAR_TOKEN}
+    token: "${SONAR_TOKEN}"
     branches:
     - master
 script:
@@ -16,14 +16,12 @@ script:
 - bash travis-end-to-end-tests.sh
 - docker-compose down
 - docker ps
-  # start deployment
-- docker login --username=_ --password="661a6477-e6be-4956-823c-326789fc87fa" registry.heroku.com
+- docker login --username=_ --password=$PW registry.heroku.com
 - docker build --rm=false -t registry.heroku.com/stock-comp/web .
 - docker push registry.heroku.com/stock-comp/web
 notifications:
   email:
     on_success: never
     on_failure: never
-#
-# todo docker pw in env variable auslagern
-#
+env:
+  secure: Z85FoX9q1lTZmNh7ZCPY1sUqzemmXq4gkRwR6WnfHauJPJlkc6yipGDRnU0iGuuBCuXUw1bI9B415KWPrOsfds3Yop83i3AcwBsaspxKEDb9WfGyq95ZciyC4BPGyjsaCL61LOpJJ09RjeGqs01XPW1y6RnIZctQ4hma/xBkgiCNrtA32KXrM3gGBIEWhWqNRSu+zXmgI3MuIy5L+mnF0Prtkak9yo1nxctp1ea3U8wv7poRdD6q8nFWcj1Sg75HBO3N2iivR3YXNDggjOCBdXXqjg5qZrKxq//mE3z4fMSNKClbXY/aqMcxfeoV1t4+mRN5nlWfPPOAlxO8ovJk/JYI6Qu4YkPHcXymZ00OT6dxygeNtIpvW1ZxWaDbg5SKZeWjFx+3/SNg+AIj0HAnWr6asn3wglBUWdPcs1K1mlhRhxEsToEOS1w5cjH9s4ZSaaNl+2/rYqPQoa6QkFNFKKxYuo/os5XdONN36BCJAEo9SJFJZSftYaDgBzQwQlBs0hzaqyzdydZoA1jU5PN7+WLmsY4jfJUclwYpdCyTl56vxYC5NT8gqbGlaTg9H1b7mZyNCOdLGdBGKcYsqWIAOcL6jSUMgrKWG4rJJIYB8ob4yFeECDE0UOMeIN6RVIAZWN6fw9UHoYQNDTExn8vJZyE1aCDjv31mkcsPRF/ch3A=

@@ -6,5 +6,5 @@ services:
       - "8080:8080"
     container_name: stockcomparison_api_container
     volumes:
-      - ./target/stock-comparison-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
-      - ./target/stock-comparison-1.0-SNAPSHOT:/usr/local/tomcat/webapps/ROOT
+      - ./target/stock-comparison-1.0.war:/usr/local/tomcat/webapps/ROOT.war
+      - ./target/stock-comparison-1.0:/usr/local/tomcat/webapps/ROOT
