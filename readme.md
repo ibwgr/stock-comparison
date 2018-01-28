@@ -8,7 +8,7 @@
 | <a href="https://travis-ci.org/ibwgr/stock-comparison" target="_blank"><img src="https://travis-ci.org/ibwgr/stock-comparison.svg?branch=master"/></a> | <a href="https://sonarcloud.io/dashboard?id=groupId%3Astock-comparison" target="_blank"><img src="https://sonarcloud.io/api/badges/gate?key=groupId:stock-comparison"/></a> |
 
 
-### Schritte zum Start der Anwendung:
+### Schritte zum Start der Anwendung auf dem lokalen PC:
 
 1.) mvn clean package
 
@@ -20,7 +20,7 @@
 
 
 #### Zusatzinfo
-Wenn lokal ein Server wie Glassfish oder Tomcat verwendet wird, dann sind dir URL's wie folgt aufzurufen:
+Wenn lokal ein Server wie Glassfish oder Tomcat verwendet wird (also ohne Docker), dann sind dir URL's wie folgt aufzurufen:
 * http://localhost:8080/stock-comparison-1.0/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 * http://localhost:8080/stock-comparison-1.0/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
@@ -30,7 +30,7 @@ Heroku mit Docker Deployment:
 * ist deployed, Aufruf in Heroku aber noch mit Fehler
 
 OpenShift (JBoss mit Maven Build und WAR Deployment): 
-* http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
-* http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
+* http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/stock-comparison-1.0/rest/comparison/performance?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
+* http://test-appl-test-proj.193b.starter-ca-central-1.openshiftapps.com/stock-comparison-1.0/rest/comparison/correlation?stock=SAGE&stock=GOOGL&stock=ORCL&stock=K&dateFrom=20130313&dateTo=20171231
 
 
